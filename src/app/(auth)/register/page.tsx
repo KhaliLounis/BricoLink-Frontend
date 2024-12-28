@@ -22,7 +22,7 @@ import {
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useMutation } from "@tanstack/react-query";
-import { register } from "@/actions/auth";
+import { register } from "@/services/auth";
 import { useAuth } from "@/context/AuthContext";
 
 const Register = () => {
@@ -50,7 +50,7 @@ const Register = () => {
       });
       router.push("/chats");
     },
-    onError: (error: any) => {
+    onError: (error: { response?: { status: number; data: { message: string } } }) => {
       if (error.response?.status === 400) {
         toast.error(error.response?.data.message || "Something went wrong.");
       } else {
@@ -105,7 +105,7 @@ const Register = () => {
             <FormField
               control={registerForm.control}
               name="image"
-              render={({ field }) => (
+              render={() => (
                 <FormItem>
                   <div className="flex flex-col items-center">
                     <div className="size-36 relative rounded-full overflow-hidden mb-4">
@@ -132,6 +132,7 @@ const Register = () => {
                           accept="image/*"
                           className="hidden"
                           onChange={handleImageChange}
+                          title="Upload your Profile Picture"
                         />
                       </div>
                     </FormControl>
