@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  nextjs:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/app  # Sync code from your local machine to the container
+      - /app/node_modules  # Prevent node_modules overwriting in container
+    ports:
+      - "3000:3000"  # Expose port 3000 for Next.js
+    environment:
+      - NODE_ENV=development  # Set development environment variable
+    command: ["npm", "run", "dev"]  # Run the Next.js development server
