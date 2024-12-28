@@ -21,7 +21,7 @@ import {
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useMutation } from "@tanstack/react-query";
-import { login } from "@/actions/auth";
+import { login } from "@/services/auth";
 import { useAuth } from "@/context/AuthContext";
 import { useEffect } from "react";
 

@@ -22,7 +22,7 @@ import {
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useMutation } from "@tanstack/react-query";
-import { register } from "@/actions/auth";
+import { register } from "@/services/auth";
 import { useAuth } from "@/context/AuthContext";
 
 const Register = () => {
