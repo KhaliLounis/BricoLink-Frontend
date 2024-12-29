@@ -8,3 +8,14 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
+    develop:
+      watch:
+        - path: ./package.json
+          action: rebuild
+        - path: ./next.config.ts
+          action: rebuild
+        - path: ./package-lock.json
+          action: rebuild
+        - path: .
+          target: /src/app
+          action: sync+restart

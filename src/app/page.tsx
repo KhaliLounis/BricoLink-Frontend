@@ -1,7 +1,10 @@
-export default function Home() {
+import HeroSection from '@/components/layout/Hero'
+
+const Page = () => {
   return (
-    <main className="bg-white h-screen overflow-y-hidden relative">
-      cc bricolink
-    </main>
-  );
+    <div>
+      <HeroSection />
+    </div>
+  )
 }
+export default Page
