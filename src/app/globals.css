@@ -70,3 +70,21 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.bg-dark-purple {
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.text-primary {
+  color: #6c63ff;
+}
+
+.bg-primary {
+  background-color: #6c63ff;
+}
+
+.bg-primary-dark {
+  background-color: #4a46cc;
+}

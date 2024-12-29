@@ -1,10 +1,10 @@
-import Navbar from "@/components/layout/Navbar";
-import Image from "next/image";
+import HeroSection from '@/components/layout/Hero'
 
-export default function Home() {
+const Page = () => {
   return (
-    <main className="bg-white h-screen overflow-y-hidden relative">
-      cc bricolink
-    </main>
-  );
+    <div>
+      <HeroSection />
+    </div>
+  )
 }
+export default Page

@@ -23,7 +23,6 @@ import Link from "next/link";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "@/services/auth";
 import { useAuth } from "@/context/AuthContext";
-import { useEffect } from "react";
 
 const Login = () => {
   const loginForm = useForm<z.infer<typeof loginSchema>>({
@@ -49,7 +48,7 @@ const Login = () => {
       console.log(user);
       router.push("/chats");
     },
-    onError: (error: any) => {
+    onError: (error: { response?: { status: number } }) => {
       if (error.response?.status === 401) {
         toast.error("Invalid email or password.");
       } else {
@@ -143,7 +142,7 @@ const Login = () => {
       </div>
       <div>
         <div className="text-white text-lg font-medium text-center">
-          Don't have an account? <br />
+          Don`t have an account? <br />
           <Link href="/register" className="text-second font-bold ">
             Sign up here
           </Link>

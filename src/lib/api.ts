@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { refreshToken } from "@/services/auth";
 import axios from "axios";
 
@@ -12,6 +14,7 @@ export const api = axios.create({
 });
 
 let isRefreshing = false;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let failedRequestsQueue: any = [];
 
 const processQueue = (error: any) => {
