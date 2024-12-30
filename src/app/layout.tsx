@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import { Poppins } from "next/font/google";
 import { AuthProvider } from "../context/AuthContext";
 import Navbar from "../components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 
 // Configure Poppins font
 const poppins = Poppins({
@@ -33,6 +34,7 @@ export default function RootLayout({
         <ReactQueryProvider>
           <AuthProvider>{children}</AuthProvider>
         </ReactQueryProvider>
+        <Footer />
       </body>
     </html>
   );
