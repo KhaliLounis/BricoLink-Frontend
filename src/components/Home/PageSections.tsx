@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
+import Image from 'next/image';
 
 // Categories Section
 interface Category {
@@ -10,14 +11,14 @@ image: string;
 }
 
 const categories: Category[] = [
-{ id: '1', title: 'Graphic Design', image: '/api/placeholder/240/120' },
-{ id: '2', title: 'Cartoon Animation', image: '/api/placeholder/240/120' },
-{ id: '3', title: 'Illustration', image: '/api/placeholder/240/120' },
-{ id: '4', title: 'Flyers & Vouchers', image: '/api/placeholder/240/120' },
-{ id: '5', title: 'Logo Design', image: '/api/placeholder/240/120' },
-{ id: '6', title: 'Social graphics', image: '/api/placeholder/240/120' },
-{ id: '7', title: 'Article writing', image: '/api/placeholder/240/120' },
-{ id: '8', title: 'Video Editing', image: '/api/placeholder/240/120' },
+{ id: '1', title: 'Graphic Design', image: '/assets/categories/g1.png' },
+{ id: '2', title: 'Cartoon Animation', image: '/assets/categories/g2.png' },
+{ id: '3', title: 'Illustration', image: '/assets/categories/g3.png' },
+{ id: '4', title: 'Flyers & Vouchers', image: '/assets/categories/g4.png' },
+{ id: '5', title: 'Logo Design', image: '/assets/categories/g5.png' },
+{ id: '6', title: 'Social graphics', image: '/assets/categories/g6.png' },
+{ id: '7', title: 'Article writing', image: '/assets/categories/g7.png' },
+{ id: '8', title: 'Video Editing', image: '/assets/categories/g8.png' },
 ];
 
 // Trending Sellers Section
@@ -29,9 +30,9 @@ image: string;
 }
 
 const sellers: Seller[] = [
-{ id: '1', name: 'Abinesh Jino', role: 'UI/UX Designer', image: '/api/placeholder/300/300' },
-{ id: '2', name: 'Hrithik Tiwari', role: 'Blockchain Dev', image: '/api/placeholder/300/300' },
-{ id: '3', name: 'Helen', role: 'Data Scientist', image: '/api/placeholder/300/300' },
+{ id: '1', name: 'Abinesh Jino', role: 'UI/UX Designer', image: '/assets/sellers/s1.png' },
+{ id: '2', name: 'Hrithik Tiwari', role: 'Blockchain Dev', image: '/assets/sellers/s2.png' },
+{ id: '3', name: 'Helen', role: 'Data Scientist', image: '/assets/sellers/s3.png' },
 ];
 
 // FAQ/Doubts Section
@@ -45,26 +46,26 @@ const faqCards: FaqCard[] = [
 {
     id: '1',
     title: 'How to Get a Perfect Expert to finish your tasks?',
-    image: '/api/placeholder/400/300',
+    image: '/assets/getStarted/Image1.png',
 },
 {
     id: '2',
     title: 'How to Write an Overdue Payment Reminder Letter',
-    image: '/api/placeholder/400/300',
+    image: '/assets/getStarted/Image2.png',
 },
 {
     id: '3',
     title: 'Choosing the Right Payment Methods for Your Small Business',
-    image: '/api/placeholder/400/300',
+    image: '/assets/getStarted/Image3.png',
 },
 ];
 
 const PageSections = () => {
 return (
-    <div className="space-y-20">
+    <div className="space-y-20 mt-8">
     {/* Categories Section */}
     <section className="px-4 max-w-7xl mx-auto">
-        <h2 className="text-2xl font-bold mb-8">Here are Something You`d Need</h2>
+        <h2 className="text-2xl font-bold mb-8">Here are Something You&apos;d Need</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {categories.map((category) => (
             <Link
@@ -72,9 +73,12 @@ return (
             key={category.id}
             className="group relative overflow-hidden rounded-xl"
             >
-            <img
+            <Image
                 src={category.image}
                 alt={category.title}
+                width={100}
+                height={100}
+                quality={100}
                 className="w-full h-32 object-cover transition-transform group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-black/40">
@@ -93,14 +97,14 @@ return (
     </section>
 
     {/* CTA Section */}
-    <section className="bg-indigo-600 py-16 px-4">
+    <section className="bg-gradient-to-b from-[#5544B7] to-[#724FFF] py-16 px-4 rounded-lg w-[80%] mx-auto">
         <div className="max-w-2xl mx-auto text-center text-white">
         <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
         <p className="mb-8 opacity-90">
             Sign up or login to Explore Various Features that our Sellers & Freelancers Experience on a daily base
         </p>
         <button className="bg-white text-indigo-600 px-6 py-3 rounded-full font-medium hover:bg-indigo-50 transition-colors">
-            Get Started & It`s Free
+            Get Started & It&apos;s Free
         </button>
         </div>
     </section>
@@ -117,9 +121,12 @@ return (
             key={seller.id}
             className="group bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow"
             >
-            <img
+            <Image
                 src={seller.image}
                 alt={seller.name}
+                width={100}
+                height={100}
+                quality={100}
                 className="w-full h-48 object-cover rounded-lg mb-4"
             />
             <div className="flex justify-between items-center">
@@ -145,7 +152,7 @@ return (
     </section>
 
     {/* FAQ/Doubts Section */}
-    <section className="bg-indigo-600 py-16 px-4">
+    <section className="bg-gradient-to-b from-[#5544B7] to-[#724FFF] py-16 px-4">
         <div className="max-w-7xl mx-auto">
         <h2 className="text-2xl font-bold text-white mb-8">
             Have Some Doubts To Get Started?
@@ -157,9 +164,12 @@ return (
                 key={card.id}
                 className="bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
             >
-                <img
+                <Image
                 src={card.image}
                 alt={card.title}
+                width={100}
+                height={100}
+                quality={100}
                 className="w-full h-48 object-cover"
                 />
                 <div className="p-4">

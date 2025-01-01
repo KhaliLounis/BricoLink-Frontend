@@ -10,7 +10,7 @@ title: string;
 const TrendingService: React.FC<TrendingServiceProps> = ({ title }) => (
 <Link 
     href={`/services/${title.toLowerCase()}`}
-    className="flex items-center gap-2 px-4 py-2 bg-[rgba(217,217,217,0.08)] rounded-full border-[#5544B7] border-[1px] text-[#5544B7] text-sm hover:bg-[rgba(217,217,217,0.15)] transition-colors"
+    className="flex items-center gap-2 px-4 py-2 bg-[rgba(217,217,217,0.08)] rounded-full border-[#5544B7] border-[1px] bg-gradient-to-b from-[#5544B7] to-[#724FFF] text-transparent bg-clip-text text-sm transition-colors"
 >
     {title}
     <ArrowUpRight size={16} />
@@ -65,16 +65,16 @@ return (
         <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Column - Text Content */}
             <div className="space-y-8">
-            <h1 className="text-6xl font-bold font-poppins text-[#5544B7]">
+            <h1 className="text-6xl font-bold font-poppins bg-gradient-to-b from-[#5544B7] to-[#724FFF] text-transparent bg-clip-text">
                 Bricolink
             </h1>
-            <h2 className="text-4xl font-semibold text-[#5544B7]">
+            <h2 className="text-4xl font-semibold bg-gradient-to-b from-[#5544B7] to-[#724FFF] text-transparent bg-clip-text">
                 FREELANCING MADE EASY !
             </h2>
-            <p className="text-lg max-w-xl text-[#5544B7]">
+            <p className="text-lg max-w-xl bg-gradient-to-b from-[#5544B7] to-[#724FFF] text-transparent bg-clip-text">
                 Hire An Expert Or Be An Expert.
             </p>
-            <p className="text-sm max-w-xl text-[#5544B7]">
+            <p className="text-sm max-w-xl bg-gradient-to-b from-[#5544B7] to-[#724FFF] text-transparent bg-clip-text">
                 In The Ever-Evolving Landscape Of Skills And Knowledge, The Choice Between
                 Hiring An Expert Or Becoming One Yourself Is A Pivotal Decision.
             </p>
@@ -84,7 +84,7 @@ return (
                 <input
                 type="text"
                 placeholder="Search To Find Freelancers, Jobs, Or Services"
-                className="w-full px-8 py-6 bg-[#5544B7] rounded-full text-white placeholder-[#c3b9ff] focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full px-8 py-6 bg-gradient-to-b from-[#5544B7] to-[#724FFF] rounded-full text-white placeholder-[#c3b9ff] focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
                 <button 
                 type="submit"
@@ -96,7 +96,7 @@ return (
 
             {/* Trending Services */}
             <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-[#5544B7]">TRENDING SERVICES</h3>
+                <h3 className="text-lg font-semibold bg-gradient-to-b from-[#5544B7] to-[#724FFF] text-transparent bg-clip-text">TRENDING SERVICES</h3>
                 <div className="flex flex-wrap gap-4">
                 <TrendingService title="DESIGNER" />
                 <TrendingService title="DEVELOPER" />
@@ -107,6 +107,22 @@ return (
 
             {/* Right Column - Images */}
             <div className="relative">
+                <Image 
+                    src="/assets/hero/lines.png" 
+                    alt="Freelancers working" 
+                    width={320} 
+                    height={320} 
+                    quality={100} 
+                    className="absolute top-[6%] right-[17%] hidden 2xl:block" 
+                />
+                <Image 
+                    src="/assets/hero/star.png" 
+                    alt="Freelancers working" 
+                    width={80} 
+                    height={80} 
+                    quality={100} 
+                    className="absolute top-[9%] right-[20%] hidden 2xl:block" 
+                />
             <div className="grid grid-cols-2 gap-6">
                 <ImageCard
                 width={220}
@@ -122,15 +138,13 @@ return (
                 height={400}
                 src="/assets/hero/b.png"
                 alt="Fullstack Developer"
-                label="FULLSTACK DEVELOPER"
                 className="col-span-2 mt-6"
                 />
                 <ImageCard
-                width={220}
-                height={220}
+                width={240}
+                height={240}
                 src="/assets/hero/c.png"
                 alt="3D Artist"
-                label="3D ARTIST"
                 isWide={false}
                 className="col-span-2"
                 />
