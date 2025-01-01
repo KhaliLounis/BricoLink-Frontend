@@ -15,7 +15,7 @@ return (
     </button>
     
     {isOpen && (
-        <div className="absolute mt-2 w-48 bg-gradient-to-b from-[#5544B7] to-[#724FFF] rounded-lg shadow-lg overflow-hidden backdrop-blur-sm">
+        <div className="absolute z-50 mt-2 w-48 bg-gradient-to-b from-[#5544B7] to-[#724FFF] rounded-lg shadow-lg overflow-hidden backdrop-blur-sm origin-top-right md:right-0">
         <button className="w-full text-white px-4 py-3 text-left hover:bg-purple-400/30">
             Join as a costumer
         </button>
