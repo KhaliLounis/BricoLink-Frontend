@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { IoMdPeople } from "react-icons/io";
 import LanguageSelector from "../ui/LanguageSelector";
+import JoinButton from "../ui/JoinButton";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,7 +21,7 @@ const Navbar = () => {
   }
 
   return (
-    <header className="bg-dark-purple absolute top-0 left-0 right-0 z-50 text-white shadow-md">
+    <header className="bg-gradient-to-b from-[#5544B7] to-[#724FFF] absolute top-0 left-0 right-0 z-50 text-white shadow-md">
       <div className="container mx-auto flex items-center justify-between py-4 px-6">
         {/* Logo */}
         <Link
@@ -45,13 +45,7 @@ const Navbar = () => {
           >
             Login
           </Link>
-          <Link
-            href="/join"
-            className="rounded-[11px] border border-white bg-[rgba(217,217,217,0.08)] p-4 flex items-center gap-2"
-          >
-            Join
-            <IoMdPeople className="text-white" />
-          </Link>
+          <JoinButton />
           {/* Language Selector */}
           <div className="relative">
             <LanguageSelector />

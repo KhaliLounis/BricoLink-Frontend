@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Check, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 
 interface Feature {
 id: number;
@@ -70,38 +71,31 @@ return (
             </div>
         </div>
 
-        {/* Right Column - Images */}
+        {/* Right Column - Image */}
         <div className="relative h-[500px] hidden lg:block">
             {/* Dotted background pattern */}
             <div className="absolute right-0 top-0 w-32 h-32 grid grid-cols-8 gap-1">
-            {[...Array(64)].map((_, i) => (
-                <div key={i} className="w-1 h-1 rounded-full bg-blue-200/40" />
-            ))}
+                {[...Array(64)].map((_, i) => (
+                    <div key={i} className="w-1 h-1 rounded-full bg-blue-200/40" />
+                ))}
             </div>
-            
+
             {/* Curved arrow */}
-            <div className="absolute left-0 top-1/4 w-24 h-24 border-t-4 border-r-4 border-teal-600 rounded-tr-full transform -rotate-45" />
-            
-            {/* Images */}
-            <div className="relative w-full h-full">
-            <img 
-                src="/api/placeholder/400/400"
-                alt="Team member shaking hands"
-                className="absolute left-0 bottom-0 w-64 h-64 object-cover rounded-full"
-            />
-            <img 
-                src="/api/placeholder/400/400"
-                alt="Team member working"
-                className="absolute left-1/4 top-0 w-72 h-72 object-cover rounded-full"
-            />
-            <img 
-                src="/api/placeholder/400/400"
-                alt="Team member writing"
-                className="absolute right-0 bottom-1/4 w-64 h-64 object-cover rounded-full"
-            />
+            <div className="absolute left-[23%] top-[12%] w-24 h-24 border-t-4 border-r-4 border-teal-600 rounded-tr-full transform -rotate-90" />
+
+            {/* Centered Image */}
+            <div className="absolute inset-0 flex items-center justify-center">
+                <Image 
+                    width={400} 
+                    height={400} 
+                    src="/assets/icons/f.png" 
+                    alt="" 
+                    className="w-full h-auto"
+                    quality={100}
+                />
             </div>
         </div>
-        </div>
+    </div>
     </div>
     </section>
 );
