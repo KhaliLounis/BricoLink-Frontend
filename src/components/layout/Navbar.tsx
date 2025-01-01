@@ -63,7 +63,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <nav className="md:hidden bg-dark-purple text-white">
+        <nav className="md:hidden bg-gradient-to-b from-[#5544B7] to-[#724FFF] text-white">
           <ul className="flex flex-col items-center gap-4 py-4">
             <Link href="/explore" className="hover:text-primary">
               Explore
@@ -71,13 +71,8 @@ const Navbar = () => {
             <Link href="/login" className="hover:text-primary">
               Login
             </Link>
-            <Link
-              href="/join"
-              className="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-dark"
-            >
-              Join
-            </Link>
-            <li className="cursor-pointer">English</li>
+            <JoinButton />
+            <LanguageSelector />
           </ul>
         </nav>
       )}
