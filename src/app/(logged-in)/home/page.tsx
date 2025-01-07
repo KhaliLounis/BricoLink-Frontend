@@ -2,7 +2,6 @@ import Image from "next/image"
 import { Heart, Star } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 
 export default function MarketplacePage() {
   return (
@@ -35,14 +34,7 @@ export default function MarketplacePage() {
             </Button>
           </div>
         </div>
-        <ScrollArea>
-          <div className="flex gap-4 pb-4">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <GigCard key={i} />
-            ))}
-          </div>
-          <ScrollBar orientation="horizontal" />
-        </ScrollArea>
+
       </div>
 
       {/* Most Popular Gigs Section */}
