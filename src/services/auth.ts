@@ -1,11 +1,16 @@
 import { api } from "@/lib/api";
 
-export const register = async ({ name, email, password, image }: RegisterUser) => {
+export const register = async ({
+  name,
+  email,
+  password,
+  image,
+}: RegisterUser) => {
   const formData = new FormData();
   formData.append("name", name);
   formData.append("email", email);
   formData.append("password", password);
-  
+
   if (image) {
     formData.append("image", image);
   }
@@ -23,10 +28,11 @@ export const login = async ({ email, password }: LoginUser) => {
   const response = await api.post("/auth/login", { email, password });
   return response.data;
 };
+
 export const refreshToken = async () => {
   const response = await api.get("/auth/refresh");
   return response.data;
-}
+};
 
 export const requestPasswordReset = async (email: string) => {
   const response = await api.post(`/auth/reset-password`, { email });
@@ -34,7 +40,9 @@ export const requestPasswordReset = async (email: string) => {
 };
 
 export const verifyResetCode = async (userId: string, code: string) => {
-  const response = await api.post(`/auth/verify-reset-code/${userId}`, { code });
+  const response = await api.post(`/auth/verify-reset-code/${userId}`, {
+    code,
+  });
   return response.data;
 };
 
@@ -46,4 +54,4 @@ export const setNewPassword = async (password: string) => {
 export const logout = async () => {
   const response = await api.post("/auth/logout");
   return response.data;
-}
+};

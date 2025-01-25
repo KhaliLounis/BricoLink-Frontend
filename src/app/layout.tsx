@@ -4,10 +4,7 @@ import ReactQueryProvider from "./ReactQueryProvider";
 import { Toaster } from "react-hot-toast";
 import { Poppins } from "next/font/google";
 import { AuthProvider } from "../context/AuthContext";
-import Navbar from "../components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
 
-// Configure Poppins font
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -27,14 +24,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className} antialiased`}>
-        <Navbar />
         <div>
           <Toaster />
         </div>
         <ReactQueryProvider>
           <AuthProvider>{children}</AuthProvider>
         </ReactQueryProvider>
-        <Footer />
       </body>
     </html>
   );

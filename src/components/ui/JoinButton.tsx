@@ -1,31 +1,15 @@
-import React, { useState } from 'react';
-import { IoMdPeople } from 'react-icons/io';
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { IoMdPeople } from "react-icons/io";
 
 const JoinButton = () => {
-const [isOpen, setIsOpen] = useState(false);
-
-return (
-    <div className="relative">
-    <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="bg-gradient-to-b from-[#5544B7] to-[#724FFF] border border-white text-white px-6 py-2 rounded-lg flex items-center space-x-2 hover:bg-purple-400/30"
-    >
-        <span>Join</span>
-        <IoMdPeople className="text-white" />
-    </button>
-    
-    {isOpen && (
-        <div className="absolute z-50 mt-2 w-48 bg-gradient-to-b from-[#5544B7] to-[#724FFF] rounded-lg shadow-lg overflow-hidden backdrop-blur-sm origin-top-right md:right-0">
-        <button className="w-full text-white px-4 py-3 text-left hover:bg-purple-400/30">
-            Join as a costumer
-        </button>
-        <button className="w-full text-white px-4 py-3 text-left hover:bg-purple-400/30">
-            Join as an artisan
-        </button>
-        </div>
-    )}
-    </div>
-);
+  return (
+    <Link href="/register">
+      <Button className="bg-gradient-to-b from-[#5544B7] to-[#724FFF] border border-white text-white hover:bg-purple-400/30">
+        Join <IoMdPeople className="ml-2" />
+      </Button>
+    </Link>
+  );
 };
 
 export default JoinButton;

@@ -1,5 +1,18 @@
 "use client";
-import React, { createContext, useState, useContext, ReactNode, useEffect } from "react";
+
+import React, {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  useEffect,
+} from "react";
+
+type AuthContextType = {
+  user: User | null;
+  setUser: (user: User | null) => void;
+  logout: () => void;
+};
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -12,6 +25,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setUser(JSON.parse(savedUser));
     }
   }, []);
+
   const logout = () => {
     setUser(null);
     localStorage.removeItem("user");

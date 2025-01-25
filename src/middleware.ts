@@ -2,31 +2,43 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  // const accessToken = request.cookies.get("accessToken")?.value;
-  // const refreshToken = request.cookies.get("refreshToken")?.value;
-  // const { pathname } = request.nextUrl;
+  const accessToken = request.cookies.get("access_token")?.value;
+  const userRole = request.cookies.get("role")?.value;
+  const { pathname } = request.nextUrl;
 
-  // const protectedRoutes = ["/chats", "/friend-requests", "/users"];
-  // const guestRoutes = ["/login", "/register"];
+  const routes = {
+    guest: ["/login", "/register", "/"],
+    protected: {
+      common: ["/chats", "/tracking", "/requests, /artisans", "/profile"],
+      artisan: ["/artisan-extra"],
+    },
+  };
 
-  // const isProtectedRoute = protectedRoutes.some((route) =>
-  //   pathname.startsWith(route)
-  // );
+  // Redirect unauthenticated users trying to access protected routes
+  if (!accessToken) {
+    // Allow unauthenticated users to access public routes
+    if (routes.guest.some((route) => pathname.startsWith(route))) {
+      return NextResponse.next();
+    }
 
-  // const isGuestRoute = guestRoutes.some((route) => pathname.startsWith(route));
+    // Redirect unauthenticated users from protected routes
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+  // Redirect logged-in users away from guest routes
+  if (routes.guest.some((route) => pathname.startsWith(route))) {
+    return NextResponse.redirect(new URL("/tracking", request.url));
+  }
 
-  // if (isProtectedRoute) {
-  //   if (!refreshToken) {
-  //     return NextResponse.redirect(new URL("/login", request.url));
-  //   }
-  //   else if (!accessToken) {
-  //     return NextResponse.next();
-  //   }
-  // }
+  // Handle role-based redirection for protected routes
+  if (userRole) {
+    const allowedRoutes =
+      routes.protected[userRole as keyof typeof routes.protected] || [];
+    const isAllowed = allowedRoutes.some((route) => pathname.startsWith(route));
 
-  // if (isGuestRoute && accessToken) {
-  //   return NextResponse.redirect(new URL("/chats", request.url));
-  // }
+    if (!isAllowed) {
+      return NextResponse.redirect(new URL("/tracking", request.url));
+    }
+  }
 
   return NextResponse.next();
 }
