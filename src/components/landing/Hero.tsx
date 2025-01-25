@@ -1,8 +1,10 @@
 "use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { ArrowUpRight, Search } from "lucide-react";
+
 interface TrendingServiceProps {
   title: string;
 }
@@ -10,7 +12,7 @@ interface TrendingServiceProps {
 const TrendingService: React.FC<TrendingServiceProps> = ({ title }) => (
   <Link
     href={`/services/${title.toLowerCase()}`}
-    className="flex items-center gap-2 px-4 py-2 bg-[rgba(217,217,217,0.08)] rounded-full border-[#5544B7] border-[1px] bg-gradient-to-b from-[#5544B7] to-[#724FFF] text-transparent bg-clip-text text-sm transition-colors"
+    className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-[#5544B7] text-white hover:bg-white/20 transition-colors"
   >
     {title}
     <ArrowUpRight size={16} />
@@ -65,41 +67,30 @@ const HeroSection: React.FC = () => {
   };
 
   return (
-    <section className="relative text-white overflow-hidden">
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0 bg-[#C4B9FF29]"></div>
-
-      {/* Main Content Container - positioned above background */}
+    <section className="relative text-white overflow-hidden bg-[#5544B7]">
+      {/* Main Content Container */}
       <div className="relative z-10 min-h-[calc(100vh-80px)] mt-[80px]">
         <div className="container mx-auto px-6 py-12">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Column - Text Content */}
             <div className="space-y-8">
-              <h1 className="text-6xl font-bold font-poppins bg-gradient-to-b from-[#5544B7] to-[#724FFF] text-transparent bg-clip-text">
-                Bricolink
-              </h1>
-              <h2 className="text-4xl font-semibold bg-gradient-to-b from-[#5544B7] to-[#724FFF] text-transparent bg-clip-text">
-                FREELANCING MADE EASY !
-              </h2>
-              <p className="text-lg max-w-xl bg-gradient-to-b from-[#5544B7] to-[#724FFF] text-transparent bg-clip-text">
-                Hire An Expert Or Be An Expert.
-              </p>
-              <p className="text-sm max-w-xl bg-gradient-to-b from-[#5544B7] to-[#724FFF] text-transparent bg-clip-text">
-                In The Ever-Evolving Landscape Of Skills And Knowledge, The
-                Choice Between Hiring An Expert Or Becoming One Yourself Is A
-                Pivotal Decision.
+              <h1 className="text-6xl font-bold font-poppins">Bricolink</h1>
+              <h2 className="text-4xl font-semibold">BRICOLA MADE EASY!</h2>
+              <p className="text-lg max-w-xl">
+                Hire skilled artisans or showcase your expertise. Get started
+                today!
               </p>
 
               {/* Search Bar */}
               <form onSubmit={handleSearch} className="relative max-w-xl">
                 <input
                   type="text"
-                  placeholder="Search To Find Freelancers, Jobs, Or Services"
-                  className="w-full px-8 py-6 bg-gradient-to-b from-[#5544B7] to-[#724FFF] rounded-full text-white placeholder-[#c3b9ff] focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  placeholder="Search for artisans, jobs, or services"
+                  className="w-full px-8 py-4 bg-white/10 backdrop-blur-sm rounded-full text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white"
                 />
                 <button
                   type="submit"
-                  className="absolute right-0 top-1/2 -translate-y-1/2 p-6 bg-[#c3b9ff] rounded-full"
+                  className="absolute right-0 top-1/2 -translate-y-1/2 p-4 bg-white rounded-full"
                 >
                   <Search size={24} className="text-[#5544B7]" />
                 </button>
@@ -107,13 +98,11 @@ const HeroSection: React.FC = () => {
 
               {/* Trending Services */}
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold bg-gradient-to-b from-[#5544B7] to-[#724FFF] text-transparent bg-clip-text">
-                  TRENDING SERVICES
-                </h3>
+                <h3 className="text-lg font-semibold">TRENDING SERVICES</h3>
                 <div className="flex flex-wrap gap-4">
-                  <TrendingService title="DESIGNER" />
-                  <TrendingService title="DEVELOPER" />
-                  <TrendingService title="WORDPRESS" />
+                  <TrendingService title="Décoration" />
+                  <TrendingService title="Plomberie" />
+                  <TrendingService title="Électricité" />
                 </div>
               </div>
             </div>

@@ -1,97 +1,69 @@
-import React from 'react';
-import Link from 'next/link';
-import { ChevronRight, Code, PenTool, Search, Video } from 'lucide-react';
+"use client";
 
-interface Service {
-id: string;
-title: string;
-icon: React.ReactNode;
-bgColor: string;
-href: string;
-}
+import React, { useState } from "react";
+import { services } from "@/lib/constants";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import Image from "next/image";
 
-const services: Service[] = [
-{
-    id: 'web-dev',
-    title: 'WEB DEVELOPMENT',
-    icon: <Code className="w-8 h-8 text-white" />,
-    bgColor: 'bg-purple-600',
-    href: '/services/web-development',
-},
-{
-    id: 'logo-design',
-    title: 'LOGO DESIGN',
-    icon: <PenTool className="w-8 h-8 text-white" />,
-    bgColor: 'bg-blue-400',
-    href: '/services/logo-design',
-},
-{
-    id: 'seo',
-    title: 'SEO',
-    icon: <Search className="w-8 h-8 text-white" />,
-    bgColor: 'bg-green-500',
-    href: '/services/seo',
-},
-{
-    id: 'video-editing',
-    title: 'VIDEO EDITING',
-    icon: <Video className="w-8 h-8 text-white" />,
-    bgColor: 'bg-purple-700',
-    href: '/services/video-editing',
-},
-];
+const ServicesSlider = () => {
+  const [selectedCategory, setSelectedCategory] = useState(services[0]);
 
-const PopularServices = () => {
-return (
-    <section className="py-16 px-4 max-w-7xl mx-auto">
-    <div className="flex justify-between items-center mb-8">
-        <div className="flex items-center gap-2">
-        <h2 className="text-2xl font-bold">Most Popular Services</h2>
-        <div className="text-purple-500">
-            <ChevronRight className="w-5 h-5 rotate-45" />
-        </div>
-        </div>
-        <Link
-        href="/services"
-        className="text-purple-400 hover:text-purple-600 transition-colors flex items-center gap-1"
-        >
-        View All
-        <ChevronRight className="w-4 h-4" />
-        </Link>
-    </div>
+  return (
+    <section className="py-12 px-4 max-w-7xl mx-auto">
+      <h2 className="text-3xl font-bold mb-6 text-center text-[#5544B7]">
+        Explore Our Services
+      </h2>
 
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {services.map((service) => (
-        <Link
+      {/* Horizontal Category Scroll Area */}
+      <div className="mb-6">
+        <ScrollArea className="w-full">
+          <div className="flex space-x-4 pb-4">
+            {services.map((category) => (
+              <button
+                key={category.category}
+                onClick={() => setSelectedCategory(category)}
+                className={`flex items-center whitespace-nowrap px-4 py-2 rounded-lg text-sm transition-colors ${
+                  selectedCategory.category === category.category
+                    ? "bg-[#5544B7] text-white"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }`}
+              >
+                <span className="mr-2">{category.icon}</span>
+                {category.category}
+              </button>
+            ))}
+          </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
+      </div>
+
+      {/* Services Grid for Selected Category */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {selectedCategory.items.map((service) => (
+          <div
             key={service.id}
-            href={service.href}
-            className="group relative overflow-hidden rounded-lg aspect-square transition-transform hover:scale-105"
-        >
-            <div className={`${service.bgColor} w-full h-full p-6 relative`}>
-            <div className="absolute inset-0 bg-gradient-to-br from-black/30 to-transparent" />
-            <div className="relative z-10">
-                {service.icon}
-                <h3 className="text-white font-semibold mt-4 text-lg">
-                {service.title}
-                </h3>
+            className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-200"
+          >
+            <div className="p-4 flex flex-col items-center text-center">
+              <div className="w-16 h-16 rounded-full overflow-hidden relative">
+                <Image
+                  src={service.image}
+                  alt={service.name}
+                  width={64}
+                  height={64}
+                  className="w-full h-full object-cover transition-transform hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-black/10 hover:bg-black/20 transition-colors" />
+              </div>
+              <p className="mt-2 text-sm font-medium text-gray-700 hover:text-[#5544B7] transition-colors">
+                {service.name}
+              </p>
             </div>
-            </div>
-        </Link>
+          </div>
         ))}
-    </div>
-
-    <div className="flex justify-center mt-8 gap-2">
-        {[0, 1, 2].map((dot) => (
-        <div
-            key={dot}
-            className={`h-2 rounded-full transition-all ${
-            dot === 0 ? 'w-8 bg-blue-500' : 'w-2 bg-gray-300'
-            }`}
-        />
-        ))}
-    </div>
+      </div>
     </section>
-);
+  );
 };
 
-export default PopularServices;
+export default ServicesSlider;

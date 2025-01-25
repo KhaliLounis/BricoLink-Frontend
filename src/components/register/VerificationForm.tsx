@@ -102,7 +102,11 @@ export default function VerificationForm({ email }: VerificationFormProps) {
                       Verification Code
                     </FormLabel>
                     <FormControl>
-                      <InputOTP maxLength={6}>
+                      <InputOTP
+                        maxLength={6}
+                        value={form.getValues("otp")}
+                        onChange={(value) => form.setValue("otp", value)}
+                      >
                         <InputOTPGroup>
                           <InputOTPSlot index={0} />
                           <InputOTPSlot index={1} />

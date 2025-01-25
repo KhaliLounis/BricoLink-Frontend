@@ -1,6 +1,7 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 
 // Categories Section
@@ -80,8 +81,8 @@ const PageSections = () => {
     <div className="space-y-20 mt-8">
       {/* Categories Section */}
       <section className="px-4 max-w-7xl mx-auto">
-        <h2 className="text-2xl font-bold mb-8">
-          Here are Something You&apos;d Need
+        <h2 className="text-2xl font-bold mb-8 text-center">
+          Explore Our Service Categories
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {categories.map((category) => (
@@ -93,75 +94,63 @@ const PageSections = () => {
               <Image
                 src={category.image}
                 alt={category.title}
-                width={100}
-                height={100}
+                width={300}
+                height={200}
                 quality={100}
-                className="w-full h-32 object-cover transition-transform group-hover:scale-105"
+                className="w-full h-48 object-cover transition-transform group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-black/40">
-                <span className="absolute bottom-3 left-3 text-white font-medium">
+              <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                <span className="text-white font-semibold text-lg">
                   {category.title}
                 </span>
               </div>
             </Link>
           ))}
         </div>
-        <div className="text-center mt-4">
+      </section>
+
+      {/* CTA Section */}
+      <section className="bg-gradient-to-b from-[#5544B7] to-[#724FFF] py-16 px-4">
+        <div className="max-w-2xl mx-auto text-center text-white">
+          <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
+          <p className="mb-8 opacity-90">
+            Join Bricolink today and connect with skilled artisans or showcase
+            your expertise.
+          </p>
           <Link
-            href="/categories"
-            className="text-blue-500 hover:text-blue-600"
+            href="/signup"
+            className="bg-white text-[#5544B7] px-6 py-3 rounded-full font-medium hover:bg-indigo-50 transition-colors"
           >
-            More Categories
+            Sign Up Now
           </Link>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="bg-gradient-to-b from-[#5544B7] to-[#724FFF] py-16 px-4 rounded-lg w-[80%] mx-auto">
-        <div className="max-w-2xl mx-auto text-center text-white">
-          <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
-          <p className="mb-8 opacity-90">
-            Sign up or login to Explore Various Features that our Sellers &
-            Freelancers Experience on a daily base
-          </p>
-          <button className="bg-white text-indigo-600 px-6 py-3 rounded-full font-medium hover:bg-indigo-50 transition-colors">
-            Get Started & It&apos;s Free
-          </button>
-        </div>
-      </section>
-
       {/* FAQ/Doubts Section */}
-      <section className="bg-gradient-to-b from-[#5544B7] to-[#724FFF] py-16 px-4">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-2xl font-bold text-white mb-8">
-            Have Some Doubts To Get Started?
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {faqCards.map((card) => (
-              <Link
-                href={`/faq/${card.id}`}
-                key={card.id}
-                className="bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
-              >
-                <Image
-                  src={card.image}
-                  alt={card.title}
-                  width={100}
-                  height={100}
-                  quality={100}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-4">
-                  <h3 className="font-medium leading-snug">{card.title}</h3>
-                </div>
-              </Link>
-            ))}
-          </div>
-          <div className="text-center mt-8">
-            <button className="bg-white text-indigo-600 px-6 py-3 rounded-full font-medium hover:bg-indigo-50 transition-colors">
-              See More Now
-            </button>
-          </div>
+      <section className="px-4 max-w-7xl mx-auto">
+        <h2 className="text-2xl font-bold mb-8 text-center">
+          Frequently Asked Questions
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {faqCards.map((card) => (
+            <Link
+              href={`/faq/${card.id}`}
+              key={card.id}
+              className="bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
+            >
+              <Image
+                src={card.image}
+                alt={card.title}
+                width={400}
+                height={250}
+                quality={100}
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-4">
+                <h3 className="font-medium leading-snug">{card.title}</h3>
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
     </div>
