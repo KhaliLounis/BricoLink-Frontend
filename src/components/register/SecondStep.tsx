@@ -11,7 +11,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import Image from "next/image";
@@ -36,7 +35,7 @@ export function ProfileStep({
 
   const handleImageUpload = (
     e: React.ChangeEvent<HTMLInputElement>,
-    onChange: (value: File) => void
+    onChange: (value: File) => void,
   ) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -44,15 +43,15 @@ export function ProfileStep({
     }
   };
 
-  const handleMultipleImageUpload = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    onChange: (value: File[]) => void
-  ) => {
-    const files = Array.from(e.target.files || []);
-    if (files.length > 0) {
-      onChange(files);
-    }
-  };
+  // const handleMultipleImageUpload = (
+  //   e: React.ChangeEvent<HTMLInputElement>,
+  //   onChange: (value: File[]) => void
+  // ) => {
+  //   const files = Array.from(e.target.files || []);
+  //   if (files.length > 0) {
+  //     onChange(files);
+  //   }
+  // };
 
   return (
     <Form {...form}>

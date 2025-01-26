@@ -1,7 +1,7 @@
-import Image from "next/image"
-import { Heart, Star } from 'lucide-react'
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import Image from "next/image";
+import { Heart, Star } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function MarketplacePage() {
   return (
@@ -11,10 +11,16 @@ export default function MarketplacePage() {
         <h1 className="text-xl">Hey Jino,</h1>
         <Tabs defaultValue="offers" className="w-[200px]">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="offers" className="bg-[#6E56CF] text-white data-[state=active]:bg-[#6E56CF]/80">
+            <TabsTrigger
+              value="offers"
+              className="bg-[#6E56CF] text-white data-[state=active]:bg-[#6E56CF]/80"
+            >
               Offers
             </TabsTrigger>
-            <TabsTrigger value="requests" className="data-[state=active]:bg-muted">
+            <TabsTrigger
+              value="requests"
+              className="data-[state=active]:bg-muted"
+            >
               Requests
             </TabsTrigger>
           </TabsList>
@@ -34,12 +40,13 @@ export default function MarketplacePage() {
             </Button>
           </div>
         </div>
-
       </div>
 
       {/* Most Popular Gigs Section */}
       <div>
-        <h2 className="text-lg font-medium mb-4">Most popular Gigs in App Design</h2>
+        <h2 className="text-lg font-medium mb-4">
+          Most popular Gigs in App Design
+        </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {Array.from({ length: 5 }).map((_, i) => (
             <GigCard key={i} />
@@ -57,7 +64,7 @@ export default function MarketplacePage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 function GigCard() {
@@ -76,9 +83,9 @@ function GigCard() {
           </div>
           <span className="text-xs text-white font-medium">username99</span>
         </div>
-        <Button 
-          size="icon" 
-          variant="ghost" 
+        <Button
+          size="icon"
+          variant="ghost"
           className="absolute top-2 right-2 z-20 h-8 w-8 bg-white/20 hover:bg-white/40 text-white"
         >
           <Heart className="h-4 w-4" />
@@ -106,6 +113,5 @@ function GigCard() {
         </div>
       </div>
     </div>
-  )
+  );
 }
-

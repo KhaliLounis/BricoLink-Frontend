@@ -95,7 +95,7 @@ export default function ArtisanRegistration({
   };
 
   const onSubmit = async (
-    data: ArtisanBasicInfoForm | ArtisanProfileForm | ArtisanServicesForm
+    data: ArtisanBasicInfoForm | ArtisanProfileForm | ArtisanServicesForm,
   ) => {
     // Update formData with the new data
     setFormData((prev) => ({ ...prev, ...data }));
@@ -185,7 +185,7 @@ export default function ArtisanRegistration({
                   key={step}
                   className={cn(
                     "w-3 h-3 rounded-full",
-                    step === currentStep ? "bg-primary" : "bg-gray-300"
+                    step === currentStep ? "bg-primary" : "bg-gray-300",
                   )}
                 />
               ))}

@@ -58,6 +58,7 @@ export default function ClientRegistration() {
         description: "An error occurred during registration. Please try again.",
         variant: "destructive",
       });
+      console.log(error);
     } finally {
       setIsLoading(false);
     }

@@ -76,7 +76,7 @@ api.interceptors.response.use(
 
     // If the error is not related to token expiration, reject it
     return Promise.reject(error);
-  }
+  },
 );
 
 export default api;

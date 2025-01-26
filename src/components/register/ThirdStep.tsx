@@ -16,6 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { services } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { CheckCircle } from "lucide-react";
+import Image from "next/image";
 
 type ServicesForm = z.infer<typeof artisanServicesSchema>;
 
@@ -76,21 +77,21 @@ export function ServicesStep({
                                 "relative cursor-pointer rounded-lg p-2 transition-all border-2",
                                 field.value.includes(service.id)
                                   ? "border-primary bg-primary/10"
-                                  : "border-muted-foreground/30 bg-muted opacity-75 hover:opacity-100"
+                                  : "border-muted-foreground/30 bg-muted opacity-75 hover:opacity-100",
                               )}
                               onClick={() => {
                                 const newValue = field.value.includes(
-                                  service.id
+                                  service.id,
                                 )
                                   ? field.value.filter(
-                                      (id: string) => id !== service.id
+                                      (id: string) => id !== service.id,
                                     )
                                   : [...field.value, service.id];
                                 field.onChange(newValue);
                               }}
                             >
                               <div className="aspect-square overflow-hidden rounded-full w-12 h-12 mx-auto">
-                                <img
+                                <Image
                                   src={service.image || "/placeholder.svg"}
                                   alt={service.name}
                                   className="h-full w-full object-cover"
@@ -147,7 +148,7 @@ export function ServicesStep({
             type="submit"
             className="bg-gradient-to-b from-[#5544B7] to-[#724FFF] text-white"
           >
-            S'inscrire
+            S&apos;inscrire
           </Button>
         </div>
       </form>
