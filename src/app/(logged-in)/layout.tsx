@@ -1,3 +1,4 @@
+import { Navbar } from "@/components/layout/Navbar";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,8 +11,9 @@ export default function LoggedInLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex h-screen w-full bg-[#eff4fa]">
-      <div className="w-full overflow-auto">{children}</div>
+    <div className="min-h-screen bg-gray-50">
+      <Navbar />
+      {children}
     </div>
   );
 }

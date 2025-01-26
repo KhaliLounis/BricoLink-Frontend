@@ -1,0 +1,46 @@
+name: Deploy Next.js App to VPS
+
+on:
+  push:
+    branches:
+      - main # Trigger deployment when pushing to the `main` branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest # Use an Ubuntu runner environment
+
+    steps:
+      # Step 1: Checkout the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up SSH for secure communication with the VPS
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+
+      # Step 3: Deploy and restart frontend using PM2 on the VPS
+      - name: Deploy and restart frontend with PM2
+        run: |
+          # Copy the source code to the VPS
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/id_rsa" \
+            --exclude='node_modules' \
+            --exclude='.next' \
+            --exclude='out' \
+            ./ \
+            ${{ secrets.SSH_USER }}@${{ secrets.VPS_HOST }}:${{ secrets.DEPLOY_PATH }}/
+
+          # Install dependencies, build, and start the Next.js app using PM2
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.VPS_HOST }} "\
+            cd ${{ secrets.DEPLOY_PATH }} && \
+            npm install && \
+            npm run build &\
+            pm2 start npm --name 'bricolink-frontend' -- start && \
+            pm2 save && \
+            pm2 startup && \
+            pm2 restart all \
+          "

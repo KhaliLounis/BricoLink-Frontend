@@ -45,12 +45,12 @@ const ServicesSlider = () => {
             className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-200"
           >
             <div className="p-4 flex flex-col items-center text-center">
-              <div className="w-16 h-16 rounded-full overflow-hidden relative">
+              <div className="w-16 h-16 rounded-xl overflow-hidden relative">
                 <Image
                   src={service.image}
                   alt={service.name}
-                  width={64}
-                  height={64}
+                  width={80}
+                  height={80}
                   className="w-full h-full object-cover transition-transform hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-black/10 hover:bg-black/20 transition-colors" />

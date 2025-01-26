@@ -1,81 +1,38 @@
 "use client";
 
-import * as React from "react";
 import Link from "next/link";
-import { FaBars } from "react-icons/fa";
-import LanguageSelector from "@/components/ui//LanguageSelector";
-import JoinButton from "@/components/ui//JoinButton";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { navItems } from "@/lib/constants";
 
-const Navbar = () => {
-  const [isMounted, setIsMounted] = React.useState(false);
-
-  // Ensures the menu state is only set on the client side
-  React.useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  if (!isMounted) {
-    // Prevent rendering the menu state or dynamic icons on SSR
-    return null;
-  }
+export function Navbar() {
+  const pathname = usePathname();
 
   return (
-    <header className="bg-gradient-to-b from-[#5544B7] to-[#724FFF] top-0 left-0 right-0 z-50 text-white shadow-md">
-      <div className="container mx-auto flex items-center justify-between py-4 px-6">
-        {/* Logo */}
-        <Link
-          href="/"
-          className="text-white leading-[normal] font-poppins text-[40px] font-bold capitalize"
-        >
-          Bricolink
-        </Link>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-6">
-          <Link
-            href="/explore"
-            className="text-white leading-none font-poppins text-[14px] font-normal hover:text-primary"
-          >
-            Explore
-          </Link>
-          <Link
-            href="/login"
-            className="text-white leading-none font-poppins text-[14px] font-normal hover:text-primary"
-          >
-            Login
-          </Link>
-          <JoinButton />
-          <LanguageSelector />
-        </nav>
-
-        {/* Hamburger Menu for Mobile */}
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button variant="ghost" className="md:hidden text-xl p-2">
-              <FaBars />
-            </Button>
-          </SheetTrigger>
-          <SheetContent
-            side="right"
-            className="bg-gradient-to-b from-[#5544B7] to-[#724FFF] text-white"
-          >
-            <nav className="flex flex-col items-center gap-4 py-4">
-              <Link href="/explore" className="hover:text-primary">
-                Explore
-              </Link>
-              <Link href="/login" className="hover:text-primary">
-                Login
-              </Link>
-              <JoinButton />
-              <LanguageSelector />
-            </nav>
-          </SheetContent>
-        </Sheet>
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b shadow-sm">
+      <div className="container mx-auto">
+        <div className="flex items-center justify-between h-16 px-4">
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={cn(
+                "flex flex-col items-center gap-1 px-3 py-2 text-sm font-medium transition-colors relative group",
+                pathname === item.href
+                  ? "text-[#5544B7]"
+                  : "text-gray-600 hover:text-[#5544B7]"
+              )}
+            >
+              <item.icon className="w-6 h-6" />
+              <span>{item.title}</span>
+              {pathname === item.href && (
+                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#5544B7] to-[#724FFF]" />
+              )}
+              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#5544B7] to-[#724FFF] scale-x-0 transition-transform group-hover:scale-x-100" />
+            </Link>
+          ))}
+        </div>
       </div>
-    </header>
+    </nav>
   );
-};
-
-export default Navbar;
+}

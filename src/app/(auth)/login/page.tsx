@@ -6,7 +6,6 @@ import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
-
 import { loginSchema } from "@/lib/validation";
 import { Button } from "@/components/ui/button";
 import {
@@ -52,7 +51,7 @@ const Login = () => {
         name: data.data.name,
         profilePicture: data.data.imageUrl,
       });
-      router.push("/");
+      router.push("/tracking");
     },
     onError: (error: any) => {
       if (error.response?.status === 401) {

@@ -1,117 +1,200 @@
-import Image from "next/image";
-import { Heart, Star } from "lucide-react";
-import { Button } from "@/components/ui/button";
+"use client";
+
+import { Suspense, useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { RequestCard } from "@/components/tracking/RequestCard";
+import { AddRequestButton } from "@/components/tracking/AddRequestButton";
+import { AddRequestDialog } from "@/components/tracking/AddRequestDialog";
+import { tabs } from "@/lib/constants";
+// Sample data - replace with actual data from your API
+const sampleRequests: RequestCardProps[] = [
+  {
+    id: 1,
+    status: "completed",
+    date: "2 months ago",
+    location: "Bab Ezzouar",
+    distance: 0,
+    title: "URGENT: Need an Electrician",
+    description:
+      "Having issues with the electrical wiring in my apartment. Need professional help ASAP.",
+    points: 20,
+    images: [
+      "/placeholder.svg?height=200&width=200",
+      "/placeholder.svg?height=200&width=200",
+    ],
+    offers: [
+      {
+        user: {
+          name: "Sofiane EL",
+          avatar: "/placeholder.svg",
+          rating: 4.8,
+          reviews: 19,
+        },
+        price: 2000,
+        date: "2 months ago",
+        isSelected: true,
+      },
+      {
+        user: {
+          name: "Ahmed K.",
+          avatar: "/placeholder.svg",
+          rating: 4.5,
+          reviews: 12,
+        },
+        price: 2500,
+        date: "2 months ago",
+      },
+    ],
+  },
+  {
+    id: 2,
+    status: "in_progress",
+    date: "2 months ago",
+    location: "Oued Berkeche",
+    distance: 410,
+    title: "Looking for a Plumber",
+    description: "Need a plumber to fix a leak in the bathroom.",
+    points: 15,
+    images: [
+      "/placeholder.svg?height=200&width=200",
+      "/placeholder.svg?height=200&width=200",
+      "/placeholder.svg?height=200&width=200",
+    ],
+    hasUserOffer: true,
+    offers: [
+      {
+        user: {
+          name: "Current User",
+          avatar: "/placeholder.svg",
+          rating: 4.9,
+          reviews: 27,
+        },
+        price: 1800,
+        date: "2 months ago",
+      },
+      {
+        user: {
+          name: "Karim M.",
+          avatar: "/placeholder.svg",
+          rating: 4.7,
+          reviews: 15,
+        },
+        price: 2000,
+        date: "2 months ago",
+      },
+    ],
+  },
+  {
+    id: 3,
+    status: "pending",
+    date: "2 months ago",
+    location: "Tizi Ouzou",
+    distance: 76,
+    title: "App Debugging Required",
+    description: "Need help debugging a mobile application.",
+    points: 25,
+    images: ["/placeholder.svg?height=200&width=200"],
+    hasUserOffer: true,
+    offers: [
+      {
+        user: {
+          name: "Current User",
+          avatar: "/placeholder.svg",
+          rating: 4.9,
+          reviews: 27,
+        },
+        price: 3000,
+        date: "2 months ago",
+      },
+      {
+        user: {
+          name: "Yacine B.",
+          avatar: "/placeholder.svg",
+          rating: 4.6,
+          reviews: 8,
+        },
+        price: 3500,
+        date: "2 months ago",
+      },
+    ],
+  },
+];
 
-export default function MarketplacePage() {
+function TrackingContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const filter = searchParams.get("filter");
+  const [isAddRequestOpen, setIsAddRequestOpen] = useState(false);
+
+  const handleTabChange = (value: string) => {
+    if (value === "all") {
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete("filter");
+      const newPath = params.toString()
+        ? `/tracking?${params.toString()}`
+        : "/tracking";
+      router.push(newPath);
+    } else {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("filter", value);
+      router.push(`/tracking?${params.toString()}`);
+    }
+  };
+
+  const getFilteredRequests = () => {
+    switch (filter) {
+      case "requests":
+        return sampleRequests.filter((r) => !r.hasUserOffer);
+      case "offers":
+        return sampleRequests.filter((r) => r.hasUserOffer);
+      default:
+        return sampleRequests;
+    }
+  };
+
+  const currentValue = filter || "all";
+  const filteredRequests = getFilteredRequests();
+
   return (
-    <div className="container py-6 space-y-8">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <h1 className="text-xl">Hey Jino,</h1>
-        <Tabs defaultValue="offers" className="w-[200px]">
-          <TabsList className="grid w-full grid-cols-2">
+    <main className="container mx-auto pt-20 px-4 pb-24">
+      <h1 className="text-center text-gray-600 mb-6">
+        Track the progress of your requests and offers
+      </h1>
+      <Tabs
+        value={currentValue}
+        onValueChange={handleTabChange}
+        className="w-full"
+      >
+        <TabsList className="grid w-full grid-cols-3 mb-6">
+          {tabs.map((tab) => (
             <TabsTrigger
-              value="offers"
-              className="bg-[#6E56CF] text-white data-[state=active]:bg-[#6E56CF]/80"
+              key={tab.value}
+              value={tab.value}
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#5544B7] data-[state=active]:to-[#724FFF] data-[state=active]:text-white"
             >
-              Offers
+              {tab.label}
             </TabsTrigger>
-            <TabsTrigger
-              value="requests"
-              className="data-[state=active]:bg-muted"
-            >
-              Requests
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
-      </div>
-
-      {/* Continue Browsing Section */}
-      <div>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-medium">Continue browsing</h2>
-          <div className="flex gap-1">
-            <Button variant="ghost" size="icon" className="w-8 h-8">
-              ‹
-            </Button>
-            <Button variant="ghost" size="icon" className="w-8 h-8">
-              ›
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      {/* Most Popular Gigs Section */}
-      <div>
-        <h2 className="text-lg font-medium mb-4">
-          Most popular Gigs in App Design
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <GigCard key={i} />
+          ))}
+        </TabsList>
+        <div className="space-y-4">
+          {filteredRequests.map((request) => (
+            <RequestCard key={request.id} {...request} />
           ))}
         </div>
-      </div>
-
-      {/* Gigs You May Like Section */}
-      <div>
-        <h2 className="text-lg font-medium mb-4">Gigs you may like</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <GigCard key={i} />
-          ))}
-        </div>
-      </div>
-    </div>
+      </Tabs>
+      <AddRequestButton onClick={() => setIsAddRequestOpen(true)} />
+      <AddRequestDialog
+        isOpen={isAddRequestOpen}
+        onClose={() => setIsAddRequestOpen(false)}
+      />
+    </main>
   );
 }
-
-function GigCard() {
+export default function TrackingPage() {
   return (
-    <div className="w-[220px] rounded-lg border bg-card text-card-foreground shadow">
-      <div className="relative">
-        <div className="absolute top-2 left-2 z-20 flex items-center gap-2">
-          <div className="h-8 w-8 rounded-full border-2 border-white overflow-hidden">
-            <Image
-              src="/placeholder.svg"
-              alt="Avatar"
-              width={32}
-              height={32}
-              className="object-cover"
-            />
-          </div>
-          <span className="text-xs text-white font-medium">username99</span>
-        </div>
-        <Button
-          size="icon"
-          variant="ghost"
-          className="absolute top-2 right-2 z-20 h-8 w-8 bg-white/20 hover:bg-white/40 text-white"
-        >
-          <Heart className="h-4 w-4" />
-        </Button>
-        <div className="relative aspect-[4/3] overflow-hidden rounded-t-lg">
-          <Image
-            src="/placeholder.svg"
-            alt="Gig preview"
-            fill
-            className="object-cover"
-          />
-        </div>
-      </div>
-      <div className="p-3 space-y-2">
-        <h3 className="text-sm font-medium leading-tight">
-          I will design UI UX for mobile app with figma for ios
-        </h3>
-        <div className="flex items-center gap-1">
-          <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-          <span className="text-sm">4.8</span>
-        </div>
-        <div className="pt-2 border-t">
-          <p className="text-xs text-muted-foreground">Starting at</p>
-          <p className="font-medium">$67.00</p>
-        </div>
-      </div>
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <TrackingContent />
+    </Suspense>
   );
 }

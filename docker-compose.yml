@@ -1,6 +1,6 @@
 version: "3.8"
 services:
-  nextjs-app:
+  bricolink-app:
     build:
       context: .
       dockerfile: Dockerfile
@@ -8,6 +8,8 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
+    env_file:
+      - .env
     develop:
       watch:
         - path: ./package.json

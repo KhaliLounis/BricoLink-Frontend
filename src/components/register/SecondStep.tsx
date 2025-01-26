@@ -35,7 +35,7 @@ export function ProfileStep({
 
   const handleImageUpload = (
     e: React.ChangeEvent<HTMLInputElement>,
-    onChange: (value: File) => void,
+    onChange: (value: File) => void
   ) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -78,6 +78,8 @@ export function ProfileStep({
                             }
                             alt="Profile"
                             className="w-full h-full object-cover"
+                            width={200}
+                            height={200}
                           />
                         ) : (
                           <Camera className="w-8 h-8 text-gray-400" />
@@ -132,6 +134,8 @@ export function ProfileStep({
                                 }
                                 alt={`Realization ${index + 1}`}
                                 className="w-full h-full object-cover"
+                                width={200}
+                                height={200}
                               />
                             ) : (
                               <Camera className="w-8 h-8 text-gray-400" />

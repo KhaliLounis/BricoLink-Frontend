@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/layout/Navbar";
+import Navbar from "@/components/layout/LandingNavbar";
 
 export const metadata: Metadata = {
   title: "BricoLink",

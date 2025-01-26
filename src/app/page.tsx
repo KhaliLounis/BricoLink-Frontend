@@ -3,7 +3,7 @@ import HeroSection from "@/components/landing/Hero";
 import PageSections from "@/components/landing/PageSections";
 import PopularServices from "@/components/landing/Services";
 import Footer from "@/components/layout/Footer";
-import Navbar from "@/components/layout/Navbar";
+import Navbar from "@/components/layout/LandingNavbar";
 
 const Page = () => {
   return (
