@@ -36,9 +36,18 @@ jobs:
 
           # Install dependencies, build, and start the Next.js app using PM2
           ssh -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.VPS_HOST }} "\
+            # Load nvm and set up the environment properly
+            export NVM_DIR=\$HOME/.nvm && \
+            source \$NVM_DIR/nvm.sh && \
+            nvm use default && \
+            
+            # Install dependencies, build, and start the Next.js app
             cd ${{ secrets.DEPLOY_PATH }} && \
             npm install && \
-            npm run build &\
+            npm run build && \
+            npm run start &\
+            
+            # Use PM2 to manage the app and ensure it starts on reboot
             pm2 start npm --name 'bricolink-frontend' -- start && \
             pm2 save && \
             pm2 startup && \
