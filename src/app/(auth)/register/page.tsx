@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import ClientRegistration from "@/components/register/ClientRegistration";
 import ArtisanRegistration from "@/components/register/ArtisanRegistration";
@@ -7,6 +8,14 @@ import RoleSelection from "@/components/register/RoleSelection";
 import VerificationForm from "@/components/register/VerificationForm";
 
 export default function RegisterPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <RegisterPageContent />
+    </Suspense>
+  );
+}
+
+function RegisterPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const role = searchParams.get("role");
