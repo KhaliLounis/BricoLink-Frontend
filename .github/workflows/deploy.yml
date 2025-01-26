@@ -45,7 +45,6 @@ jobs:
             cd ${{ secrets.DEPLOY_PATH }} && \
             npm install && \
             npm run build && \
-            npm run start &\
             
             # Use PM2 to manage the app and ensure it starts on reboot
             pm2 start npm --name 'bricolink-frontend' -- start && \
