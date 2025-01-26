@@ -42,7 +42,7 @@ const Navbar = () => {
           </Link>
           <Link
             href="/login"
-            className="text-white leading-none font-poppins text-[14px] font-normal hover:text-primary"
+            className="text-white leading-none font-poppins text-[14px] font-normal hover:text-[#5544B7]"
           >
             Login
           </Link>
