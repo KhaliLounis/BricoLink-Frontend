@@ -63,6 +63,7 @@ export default function VerificationForm({ email }: VerificationFormProps) {
         description: "An error occurred during verification. Please try again.",
         variant: "destructive",
       });
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
@@ -86,7 +87,8 @@ export default function VerificationForm({ email }: VerificationFormProps) {
         </CardHeader>
         <CardContent>
           <p className="text-center text-sm text-gray-600 mb-4">
-            We've sent a verification code to {email}. Please enter it below.
+            We&apos;ve sent a verification code to {email}. Please enter it
+            below.
           </p>
           <Form {...form}>
             <form
@@ -96,7 +98,7 @@ export default function VerificationForm({ email }: VerificationFormProps) {
               <FormField
                 control={form.control}
                 name="otp"
-                render={({ field }) => (
+                render={({}) => (
                   <FormItem className="flex flex-col items-center">
                     <FormLabel className="text-center">
                       Verification Code
@@ -132,7 +134,7 @@ export default function VerificationForm({ email }: VerificationFormProps) {
           </Form>
         </CardContent>
         <CardFooter className="flex-col items-center space-y-2">
-          <p className="text-sm text-gray-600">Didn't receive the code?</p>
+          <p className="text-sm text-gray-600">Didn&apos;t receive the code?</p>
           <Button variant="link" onClick={resendOTP}>
             Resend OTP
           </Button>

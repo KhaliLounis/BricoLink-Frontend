@@ -22,35 +22,6 @@ const categories: Category[] = [
   { id: "8", title: "Video Editing", image: "/assets/categories/g8.png" },
 ];
 
-// Trending Sellers Section
-interface Seller {
-  id: string;
-  name: string;
-  role: string;
-  image: string;
-}
-
-const sellers: Seller[] = [
-  {
-    id: "1",
-    name: "Abinesh Jino",
-    role: "UI/UX Designer",
-    image: "/assets/sellers/s1.png",
-  },
-  {
-    id: "2",
-    name: "Hrithik Tiwari",
-    role: "Blockchain Dev",
-    image: "/assets/sellers/s2.png",
-  },
-  {
-    id: "3",
-    name: "Helen",
-    role: "Data Scientist",
-    image: "/assets/sellers/s3.png",
-  },
-];
-
 // FAQ/Doubts Section
 interface FaqCard {
   id: string;

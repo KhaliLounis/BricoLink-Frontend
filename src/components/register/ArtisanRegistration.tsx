@@ -46,7 +46,7 @@ export default function ArtisanRegistration({
     profilePicture: null as File | null,
     realizations: [] as File[],
   });
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
 
   const basicInfoForm = useForm<ArtisanBasicInfoForm>({
     resolver: zodResolver(artisanBasicInfoSchema),
@@ -80,7 +80,7 @@ export default function ArtisanRegistration({
       services: formData.services,
       bio: formData.bio,
     });
-  }, [formData]);
+  }, [formData, basicInfoForm, profileForm, servicesForm]);
 
   const updateURL = (data: Record<string, any>) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -106,7 +106,6 @@ export default function ArtisanRegistration({
       params.set("step", (currentStep + 1).toString());
       router.push(`/register?${params.toString()}`);
     } else {
-      setIsLoading(true);
       try {
         // Use formData for submission (it now includes all steps' data)
         console.log(formData); // Check if bio and services are included
@@ -123,8 +122,7 @@ export default function ArtisanRegistration({
             "An error occurred during registration. Please try again.",
           variant: "destructive",
         });
-      } finally {
-        setIsLoading(false);
+        console.log(error);
       }
     }
   };

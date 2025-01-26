@@ -14,7 +14,7 @@ export const api = axios.create({
 let isRefreshing = false;
 let failedRequestsQueue: any = [];
 
-const processQueue = (error: any) => {
+const processQueue = (error: Error | null) => {
   failedRequestsQueue.forEach((prom: any) => {
     prom.resolve();
   });
@@ -48,12 +48,12 @@ api.interceptors.response.use(
 
           // Process queued requests with the new token
           processQueue(null);
-          console.log("working")
+          console.log("working");
           // Retry the original request with the new token (the token is updated in cookies automatically)
           return api(originalRequest);
         } catch (refreshError) {
           // If refresh fails, reject the queue
-          processQueue(refreshError);
+          processQueue(refreshError as Error);
           window.location.href = "/login";
           // Handle the refresh token failure (e.g., redirect to login page)
           return Promise.reject(refreshError);

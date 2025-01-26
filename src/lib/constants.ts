@@ -1,6 +1,3 @@
-import { IoChatbubbleEllipses } from "react-icons/io5";
-import { FaUserFriends } from "react-icons/fa";
-
 export const services = [
   {
     category: "Décoration et aménagement",

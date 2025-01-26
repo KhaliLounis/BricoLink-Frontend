@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars } from "react-icons/fa";
 import LanguageSelector from "@/components/ui//LanguageSelector";
 import JoinButton from "@/components/ui//JoinButton";
 import { Button } from "@/components/ui/button";

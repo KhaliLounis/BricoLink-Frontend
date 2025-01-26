@@ -14,6 +14,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import Image from "next/image";
 
 type ProfileForm = z.infer<typeof artisanProfileSchema>;
 
@@ -72,7 +73,7 @@ export function ProfileStep({
                     >
                       <div className="w-32 h-32 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
                         {value ? (
-                          <img
+                          <Image
                             src={
                               URL.createObjectURL(value) || "/placeholder.svg"
                             }
@@ -125,7 +126,7 @@ export function ProfileStep({
                         >
                           <div className="w-full h-full rounded-lg bg-gray-100 flex items-center justify-center overflow-hidden">
                             {realization ? (
-                              <img
+                              <Image
                                 src={
                                   URL.createObjectURL(realization) ||
                                   "/placeholder.svg"
