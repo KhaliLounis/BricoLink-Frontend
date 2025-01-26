@@ -6,7 +6,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RequestCard } from "@/components/tracking/RequestCard";
 import { AddRequestButton } from "@/components/tracking/AddRequestButton";
 import { AddRequestDialog } from "@/components/tracking/AddRequestDialog";
-import { tabs } from "@/lib/constants";
+import { trackingTabs } from "@/lib/constants";
 // Sample data - replace with actual data from your API
 const sampleRequests: RequestCardProps[] = [
   {
@@ -167,7 +167,7 @@ function TrackingContent() {
         className="w-full"
       >
         <TabsList className="grid w-full grid-cols-3 mb-6">
-          {tabs.map((tab) => (
+          {trackingTabs.map((tab) => (
             <TabsTrigger
               key={tab.value}
               value={tab.value}

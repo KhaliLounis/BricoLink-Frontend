@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArtisanCard } from "@/components/artisans/ArtisanCard";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const tabs = [
   {
@@ -99,7 +100,11 @@ const sampleArtisans: ArtisanCardProps[] = [
 ];
 
 export default function ArtisansPage() {
-  const [activeTab, setActiveTab] = useState("all");
+  const searchParams = useSearchParams();
+  const [activeTab, setActiveTab] = useState(
+    searchParams.get("filter") || "all"
+  );
+  const router = useRouter();
 
   const getFilteredArtisans = () => {
     switch (activeTab) {
@@ -114,13 +119,26 @@ export default function ArtisansPage() {
     }
   };
 
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+    if (value === "all") {
+      router.push("/artisans");
+    } else {
+      router.push(`/artisans?filter=${value}`);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <main className="container mx-auto pt-20 px-4 pb-24">
         <h1 className="text-2xl font-bold text-center mb-2">
           Professionals in Algeria
         </h1>
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <Tabs
+          value={activeTab}
+          onValueChange={handleTabChange}
+          className="w-full"
+        >
           <TabsList className="grid w-full grid-cols-4 mb-6">
             {tabs.map((tab) => (
               <TabsTrigger

@@ -736,8 +736,8 @@ export const navItems = [
     icon: Heart,
   },
   {
-    title: "Pros",
-    href: "/pros",
+    title: "Artisans",
+    href: "/artisans",
     icon: Users2,
   },
   {
@@ -746,18 +746,18 @@ export const navItems = [
     icon: Wrench,
   },
   {
-    title: "Chat",
-    href: "/chat",
+    title: "Chats",
+    href: "/chats",
     icon: MessageCircle,
   },
   {
-    title: "Account",
-    href: "/account",
+    title: "Profile",
+    href: "/profile",
     icon: User,
   },
 ];
 
-export const tabs = [
+export const trackingTabs = [
   {
     value: "all",
     label: "All",
