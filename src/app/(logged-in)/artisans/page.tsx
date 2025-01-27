@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArtisanCard } from "@/components/artisans/ArtisanCard";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -99,7 +99,7 @@ const sampleArtisans: ArtisanCardProps[] = [
   },
 ];
 
-export default function ArtisansPage() {
+function ArtisansContent() {
   const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState(
     searchParams.get("filter") || "all"
@@ -159,5 +159,13 @@ export default function ArtisansPage() {
         </Tabs>
       </main>
     </div>
+  );
+}
+
+export default function ArtisansPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ArtisansContent />
+    </Suspense>
   );
 }

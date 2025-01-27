@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RequestCard } from "@/components/requests/RequestCard";
@@ -105,7 +105,7 @@ const sampleRequests: RequestCardProps[] = [
   },
 ];
 
-export default function RequestsPage() {
+function RequestsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const filter = searchParams.get("filter");
@@ -164,5 +164,13 @@ export default function RequestsPage() {
         </Tabs>
       </main>
     </div>
+  );
+}
+
+export default function RequestsPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <RequestsContent />
+    </Suspense>
   );
 }
