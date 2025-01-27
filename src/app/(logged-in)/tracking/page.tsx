@@ -8,7 +8,7 @@ import { AddRequestButton } from "@/components/tracking/AddRequestButton";
 import { AddRequestDialog } from "@/components/tracking/AddRequestDialog";
 import { trackingTabs } from "@/lib/constants";
 // Sample data - replace with actual data from your API
-const sampleRequests: RequestCardProps[] = [
+const sampleRequests: TrackingRequestCardProps[] = [
   {
     id: 1,
     status: "completed",

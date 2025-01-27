@@ -19,7 +19,7 @@ export function RequestCard({
   points,
   offers,
   images,
-}: RequestCardProps) {
+}: TrackingRequestCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (

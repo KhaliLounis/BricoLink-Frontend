@@ -1,20 +1,32 @@
-interface Client {
-  name: string;
-  avatar: string;
-  rating: number;
-  reviews: number;
+interface Offer {
+  id: string;
+  artisan: {
+    id: string;
+    name: string;
+    avatar: string;
+    location: string;
+    rating?: {
+      score: number;
+      reviews: number;
+    };
+    available?: boolean;
+  };
+  status?: string;
+  createdAt: string;
+  distance: number;
 }
 
 interface RequestCardProps {
-  id: number;
-  status: "completed" | "pending" | "in_progress";
-  date: string;
+  id: string;
+  title: string;
+  status: "open" | "closed";
+  createdAt: string;
   location: string;
   distance: number;
-  title: string;
-  description?: string;
   points: number;
-  images: string[];
+  offerCount: number;
+  clientName: string;
+  details: string;
+  phoneNumber: string;
   offers: Offer[];
-  hasUserOffer?: boolean;
 }
