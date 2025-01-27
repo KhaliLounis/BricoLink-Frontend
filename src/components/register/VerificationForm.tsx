@@ -27,7 +27,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { toast } from "@/hooks/use-toast";
+import toast from "react-hot-toast";
 
 type VerificationForm = z.infer<typeof verificationSchema>;
 
@@ -52,17 +52,10 @@ export default function VerificationForm({ email }: VerificationFormProps) {
       // TODO: Implement actual verification logic
       console.log(data);
       await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulating API call
-      toast({
-        title: "Verification Successful",
-        description: "Your email has been verified.",
-      });
-      router.push("/");
+      toast.success("Email verified successfully");
+      router.push("/tracking");
     } catch (error) {
-      toast({
-        title: "Verification Failed",
-        description: "An error occurred during verification. Please try again.",
-        variant: "destructive",
-      });
+      toast.error("Failed to verify email");
       console.log(error);
     } finally {
       setIsLoading(false);
@@ -71,10 +64,7 @@ export default function VerificationForm({ email }: VerificationFormProps) {
 
   const resendOTP = async () => {
     // TODO: Implement resend OTP logic
-    toast({
-      title: "OTP Resent",
-      description: "A new OTP has been sent to your email.",
-    });
+    toast.success("OTP sent successfully");
   };
 
   return (

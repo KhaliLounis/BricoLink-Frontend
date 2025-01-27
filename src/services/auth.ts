@@ -1,18 +1,31 @@
 import { api } from "@/lib/api";
 
 export const register = async ({
-  name,
+  family_name,
+  first_name,
   email,
   password,
-  image,
+  phone_number,
+  location,
+  description,
+  commune,
+  profile_picture,
+  role,
 }: RegisterUser) => {
   const formData = new FormData();
-  formData.append("name", name);
+  formData.append("first_name", first_name);
+  formData.append("family_name", family_name);
   formData.append("email", email);
   formData.append("password", password);
+  formData.append("phone_number", phone_number);
+  formData.append("location", location);
+  formData.append("description", description);
+  formData.append("commune", commune);
+  formData.append("role", role);
 
-  if (image) {
-    formData.append("image", image);
+  if (profile_picture) {
+    console.log("profile_picture", profile_picture);
+    formData.append("profile_picture", profile_picture);
   }
 
   const response = await api.post("/auth/register", formData, {

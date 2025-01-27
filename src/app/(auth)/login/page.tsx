@@ -45,11 +45,13 @@ const Login = () => {
     mutationFn: login,
     onSuccess: (data: any) => {
       toast.success("Login successful");
-
+      console.log(data);
       setUser({
-        id: data.data.id,
-        name: data.data.name,
-        profilePicture: data.data.imageUrl,
+        id: data.data.user_id,
+        name: data.data.full_name,
+        profilePicture: data.data.profile_pic,
+        email: data.data.email,
+        role: data.data.role,
       });
       router.push("/tracking");
     },

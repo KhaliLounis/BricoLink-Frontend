@@ -20,11 +20,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { ProfileStep } from "./SecondStep";
 import { BasicInfoStep } from "./FirstStep";
 import { ServicesStep } from "./ThirdStep";
+import toast from "react-hot-toast";
 
 interface ArtisanRegistrationProps {
   currentStep: number;
@@ -95,7 +95,7 @@ export default function ArtisanRegistration({
   };
 
   const onSubmit = async (
-    data: ArtisanBasicInfoForm | ArtisanProfileForm | ArtisanServicesForm,
+    data: ArtisanBasicInfoForm | ArtisanProfileForm | ArtisanServicesForm
   ) => {
     // Update formData with the new data
     setFormData((prev) => ({ ...prev, ...data }));
@@ -110,23 +110,15 @@ export default function ArtisanRegistration({
         // Use formData for submission (it now includes all steps' data)
         console.log(formData); // Check if bio and services are included
         await new Promise((resolve) => setTimeout(resolve, 2000));
-        toast({
-          title: "Registration Successful",
-          description: "Please check your email for verification.",
-        });
+        toast.success("Registration successful");
         router.push(`/register?email=${encodeURIComponent(formData.email)}`);
       } catch (error) {
-        toast({
-          title: "Registration Failed",
-          description:
-            "An error occurred during registration. Please try again.",
-          variant: "destructive",
-        });
+        toast.error("An error occurred during registration. Please try again.");
         console.log(error);
       }
     }
   };
-
+  // back function
   const handleBack = () => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("step", (currentStep - 1).toString());
@@ -185,7 +177,7 @@ export default function ArtisanRegistration({
                   key={step}
                   className={cn(
                     "w-3 h-3 rounded-full",
-                    step === currentStep ? "bg-primary" : "bg-gray-300",
+                    step === currentStep ? "bg-primary" : "bg-gray-300"
                   )}
                 />
               ))}

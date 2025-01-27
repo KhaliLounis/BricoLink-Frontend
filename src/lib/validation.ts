@@ -13,18 +13,32 @@ export const loginSchema = z.object({
 });
 
 export const clientRegistrationSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
-  phoneNumber: z.string().regex(/^0[567]\d{8}$/, "Invalid phone number."),
-  location: z.string().min(1, "Location is required"),
+  firstName: z.string().min(1, "First name is required"),
+  familyName: z.string().min(1, "Family name is required"),
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+  phoneNumber: z.string().min(1, "Phone number is required"),
+  location: z.string(),
+  description: z.string().min(1, "Description is required"),
+  commune: z.string().min(1, "Commune is required"),
+  state: z.string().min(1, "State is required"),
+  postalCode: z.string().min(1, "Postal code is required"),
+  latitude: z.number().nullable(),
+  longitude: z.number().nullable(),
+  profile_picture: z.any().optional(),
 });
 
 export const artisanBasicInfoSchema = z.object({
-  email: z.string().email(),
+  email: z.string().email("Invalid email address"),
   fullName: z.string().min(1, "Full name is required"),
-  phoneNumber: z.string().regex(/^0[567]\d{8}$/, "Invalid phone number"),
-  password: z.string().min(8),
+  phoneNumber: z.string().min(1, "Phone number is required"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
   location: z.string().min(1, "Location is required"),
+  commune: z.string().optional(),
+  state: z.string().optional(),
+  postalCode: z.string().optional(),
+  latitude: z.number().nullable().optional(),
+  longitude: z.number().nullable().optional(),
 });
 
 export const artisanProfileSchema = z.object({
