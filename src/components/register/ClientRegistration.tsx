@@ -27,6 +27,7 @@ import { register } from "@/services/auth";
 import { useState } from "react";
 import Image from "next/image";
 import toast from "react-hot-toast";
+import { useAuth } from "@/context/AuthContext";
 
 type ClientRegistrationForm = z.infer<typeof clientRegistrationSchema>;
 
@@ -46,7 +47,8 @@ export default function ClientRegistration() {
     latitude: null,
     longitude: null,
   });
-  const [isFetchingLocation, setIsFetchingLocation] = useState(false); // Loading state
+  const [isFetchingLocation, setIsFetchingLocation] = useState(false);
+  const { setUser } = useAuth(); // Loading state
 
   const form = useForm<ClientRegistrationForm>({
     resolver: zodResolver(clientRegistrationSchema),
@@ -72,8 +74,15 @@ export default function ClientRegistration() {
     onSuccess: (data) => {
       console.log(data);
       toast.success(
-        "Registration Successful. Please check your email for verification.",
+        "Registration Successful. Please check your email for verification."
       );
+      setUser({
+        id: data.data.user_id,
+        name: data.data.full_name,
+        profilePicture: data.data.profile_pic,
+        email: data.data.email,
+        role: data.data.role,
+      });
       router.push(`/register?email=${encodeURIComponent(data.data.email)}`);
     },
     onError: (error) => {
@@ -124,7 +133,7 @@ export default function ClientRegistration() {
 
           try {
             const response = await fetch(
-              `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`,
+              `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
             );
             const data = await response.json();
 
@@ -161,7 +170,7 @@ export default function ClientRegistration() {
           console.error("Error detecting location:", error);
           toast.error("Unable to detect your location.");
           setIsFetchingLocation(false);
-        },
+        }
       );
     } else {
       toast.error("Your browser does not support geolocation.");

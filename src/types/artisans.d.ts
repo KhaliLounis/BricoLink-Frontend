@@ -1,4 +1,4 @@
-interface Price {
+interface ArtisanPrice {
   service: string;
   amount: number;
   unit?: string;
@@ -14,7 +14,7 @@ interface ArtisanCardProps {
   description: string;
   realizations: string[];
   services: string[];
-  prices: Price[];
+  prices: ArtisanPrice[];
   rating?: {
     score: number;
     count: number;
