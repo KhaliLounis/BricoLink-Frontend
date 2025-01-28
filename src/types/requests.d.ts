@@ -1,4 +1,4 @@
-interface Offer {
+interface RequestsOffer {
   id: string;
   artisan: {
     id: string;
@@ -28,5 +28,5 @@ interface RequestCardProps {
   clientName: string;
   details: string;
   phoneNumber: string;
-  offers: Offer[];
+  offers: RequestsOffer[];
 }
