@@ -4,13 +4,6 @@
 
 ---
 
-## 🌐 Live Preview
-
-You can view the deployed application here:  
-**[bricolink.starkk.tech](https://bricolink.starkk.tech)**
-
----
-
 ## 🌟 Features
 
 ### 1️⃣ **Authentication**
