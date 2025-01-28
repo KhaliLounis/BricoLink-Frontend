@@ -70,7 +70,6 @@ Create a `.env.local` file in the root directory and add your environment variab
 
 ```
 NEXT_PUBLIC_API_URL=http://localhost:5000
-NEXT_PUBLIC_SOME_KEY=your-local-key
 ```
 
 ### 4️⃣ Run the development server
