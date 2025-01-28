@@ -23,7 +23,7 @@ export function ImageGrid({ images, className }: ImageGridProps) {
             key={index}
             className={cn(
               "relative aspect-square cursor-pointer group",
-              index === 7 && remainingCount > 0 && "relative"
+              index === 7 && remainingCount > 0 && "relative",
             )}
             onClick={() => setSelectedImage(image)}
           >

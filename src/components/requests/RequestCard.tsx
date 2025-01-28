@@ -47,7 +47,7 @@ export function RequestCard({
                 "rounded-full",
                 status === "open"
                   ? "bg-green-100 text-green-700"
-                  : "bg-gray-100 text-gray-700"
+                  : "bg-gray-100 text-gray-700",
               )}
             >
               {status === "open" ? "Open" : "Closed"}

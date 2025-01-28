@@ -102,7 +102,7 @@ const sampleArtisans: ArtisanCardProps[] = [
 function ArtisansContent() {
   const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState(
-    searchParams.get("filter") || "all"
+    searchParams.get("filter") || "all",
   );
   const router = useRouter();
 

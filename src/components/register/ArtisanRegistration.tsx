@@ -12,7 +12,6 @@ import {
   ArtisanServicesForm,
   artisanServicesSchema,
 } from "@/lib/validation";
-
 import {
   Card,
   CardContent,
@@ -25,6 +24,8 @@ import { ProfileStep } from "./SecondStep";
 import { BasicInfoStep } from "./FirstStep";
 import { ServicesStep } from "./ThirdStep";
 import toast from "react-hot-toast";
+import { useMutation } from "@tanstack/react-query";
+import { registerArtisan } from "@/services/auth";
 
 interface ArtisanRegistrationProps {
   currentStep: number;
@@ -46,7 +47,6 @@ export default function ArtisanRegistration({
     profilePicture: null as File | null,
     realizations: [] as File[],
   });
-  // const [isLoading, setIsLoading] = useState(false);
 
   const basicInfoForm = useForm<ArtisanBasicInfoForm>({
     resolver: zodResolver(artisanBasicInfoSchema),
@@ -94,31 +94,57 @@ export default function ArtisanRegistration({
     router.push(`/register?${params.toString()}`);
   };
 
+  // React Query Mutation for Artisan Registration
+  const registrationMutation = useMutation({
+    mutationFn: registerArtisan,
+    onSuccess: (data) => {
+      toast.success("Artisan registration successful!");
+      router.push(`/register?email=${encodeURIComponent(data.email)}`);
+    },
+    onError: (error) => {
+      toast.error("An error occurred during registration. Please try again.");
+      console.error(error);
+    },
+  });
+
   const onSubmit = async (
-    data: ArtisanBasicInfoForm | ArtisanProfileForm | ArtisanServicesForm
+    data: ArtisanBasicInfoForm | ArtisanProfileForm | ArtisanServicesForm,
   ) => {
     // Update formData with the new data
     setFormData((prev) => ({ ...prev, ...data }));
     updateURL(data);
 
     if (currentStep < 3) {
+      // Move to the next step
       const params = new URLSearchParams(searchParams.toString());
       params.set("step", (currentStep + 1).toString());
       router.push(`/register?${params.toString()}`);
     } else {
+      // Final submission
       try {
-        // Use formData for submission (it now includes all steps' data)
-        console.log(formData); // Check if bio and services are included
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        toast.success("Registration successful");
-        router.push(`/register?email=${encodeURIComponent(formData.email)}`);
+        const payload = {
+          first_name: formData.fullName.split(" ")[0], // Assuming fullName contains first and last name
+          family_name: formData.fullName.split(" ")[1] || "", // Adjust based on your form structure
+          email: formData.email,
+          password: formData.password,
+          phone_number: formData.phoneNumber,
+          description: formData.bio,
+          commune: formData.location, // Assuming location maps to commune
+          profile_picture: formData.profilePicture as File, // Ensure this is a File object
+          realisations: formData.realizations as File[],
+          // Ensure these are File objects
+        };
+        console.log(payload);
+        // Call the mutation
+        registrationMutation.mutate(payload);
       } catch (error) {
         toast.error("An error occurred during registration. Please try again.");
-        console.log(error);
+        console.error(error);
       }
     }
   };
-  // back function
+
+  // Back function
   const handleBack = () => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("step", (currentStep - 1).toString());
@@ -177,7 +203,7 @@ export default function ArtisanRegistration({
                   key={step}
                   className={cn(
                     "w-3 h-3 rounded-full",
-                    step === currentStep ? "bg-primary" : "bg-gray-300"
+                    step === currentStep ? "bg-primary" : "bg-gray-300",
                   )}
                 />
               ))}

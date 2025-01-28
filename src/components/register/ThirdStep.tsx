@@ -40,51 +40,50 @@ export function ServicesStep({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit((data) => {
-          // Ensure bio and services are included in the submitted data
           onSubmit({
             services: data.services || [],
             bio: data.bio || "",
           });
         })}
-        className="space-y-6"
+        className="space-y-8"
       >
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold">Services</h2>
+        <div className="space-y-6">
+          <h2 className="text-2xl font-semibold">Services</h2>
           <p className="text-sm text-gray-600">
-            Sélectionnez les services que vous proposez.
+            Select the services you offer.
           </p>
 
           <FormField
             control={form.control}
             name="services"
             render={({ field }) => (
-              <FormItem className="space-y-4">
+              <FormItem className="space-y-6">
                 <FormControl>
-                  <div className="space-y-6 max-h-[60vh] overflow-y-auto pr-4">
+                  <div className="space-y-8 max-h-[60vh] overflow-y-auto pr-4">
                     {services.map((category) => (
                       <div key={category.category} className="space-y-4">
-                        <div className="flex items-center gap-2 sticky top-0 bg-background py-2">
+                        <div className="flex items-center gap-3 sticky top-0 bg-background py-3">
                           <span className="text-2xl">{category.icon}</span>
                           <h3 className="text-lg font-semibold">
                             {category.category}
                           </h3>
                         </div>
-                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                           {category.items.map((service) => (
                             <div
                               key={service.id}
                               className={cn(
-                                "relative cursor-pointer rounded-lg p-2 transition-all border-2",
+                                "relative cursor-pointer rounded-lg p-3 transition-all border-2",
                                 field.value.includes(service.id)
                                   ? "border-primary bg-primary/10"
-                                  : "border-muted-foreground/30 bg-muted opacity-75 hover:opacity-100"
+                                  : "border-muted-foreground/30 bg-muted opacity-75 hover:opacity-100",
                               )}
                               onClick={() => {
                                 const newValue = field.value.includes(
-                                  service.id
+                                  service.id,
                                 )
                                   ? field.value.filter(
-                                      (id: string) => id !== service.id
+                                      (id: string) => id !== service.id,
                                     )
                                   : [...field.value, service.id];
                                 field.onChange(newValue);
@@ -95,6 +94,8 @@ export function ServicesStep({
                                   src={service.image || "/placeholder.svg"}
                                   alt={service.name}
                                   className="h-full w-full object-cover"
+                                  width={150}
+                                  height={150}
                                 />
                               </div>
                               <p className="mt-2 text-center text-xs font-medium">
@@ -116,10 +117,10 @@ export function ServicesStep({
           />
         </div>
 
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold">Bio</h2>
+        <div className="space-y-6">
+          <h2 className="text-2xl font-semibold">Bio</h2>
           <p className="text-sm text-gray-600">
-            Décrivez votre expérience et vos compétences.
+            Describe your experience and skills.
           </p>
 
           <FormField
@@ -129,8 +130,8 @@ export function ServicesStep({
               <FormItem>
                 <FormControl>
                   <Textarea
-                    placeholder="Parlez-nous de votre expérience et de vos compétences..."
-                    className="min-h-[100px] resize-y"
+                    placeholder="Tell us about your experience and skills..."
+                    className="min-h-[150px] resize-y"
                     {...field}
                   />
                 </FormControl>
@@ -140,15 +141,20 @@ export function ServicesStep({
           />
         </div>
 
-        <div className="flex justify-between">
-          <Button type="button" onClick={onBack} variant="outline">
-            Retour
+        <div className="flex justify-between gap-4">
+          <Button
+            type="button"
+            onClick={onBack}
+            variant="outline"
+            className="w-1/2"
+          >
+            Back
           </Button>
           <Button
             type="submit"
-            className="bg-gradient-to-b from-[#5544B7] to-[#724FFF] text-white"
+            className="w-1/2 bg-gradient-to-b from-[#5544B7] to-[#724FFF] text-white"
           >
-            S&apos;inscrire
+            Register
           </Button>
         </div>
       </form>

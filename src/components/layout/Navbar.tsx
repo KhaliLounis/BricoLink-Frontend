@@ -20,7 +20,7 @@ export function Navbar() {
                 "flex flex-col items-center gap-1 px-3 py-2 text-sm font-medium transition-colors relative group",
                 pathname === item.href
                   ? "text-[#5544B7]"
-                  : "text-gray-600 hover:text-[#5544B7]"
+                  : "text-gray-600 hover:text-[#5544B7]",
               )}
             >
               <item.icon className="w-6 h-6" />

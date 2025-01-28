@@ -31,10 +31,10 @@ api.interceptors.response.use(
     // If the error is due to token expiration
     if (
       response &&
-      (response.data.result === "Token expired" ||
-        response.data.result === "Token missing")
+      (response.data.error === "No access token provided" ||
+        response.data.error === "Invalid or expired token")
     ) {
-      console.log(response.data.result);
+      console.log(response);
       const originalRequest = error.config;
 
       console.log(originalRequest);

@@ -72,7 +72,7 @@ export default function ClientRegistration() {
     onSuccess: (data) => {
       console.log(data);
       toast.success(
-        "Registration Successful. Please check your email for verification."
+        "Registration Successful. Please check your email for verification.",
       );
       router.push(`/register?email=${encodeURIComponent(data.data.email)}`);
     },
@@ -124,7 +124,7 @@ export default function ClientRegistration() {
 
           try {
             const response = await fetch(
-              `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+              `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`,
             );
             const data = await response.json();
 
@@ -161,7 +161,7 @@ export default function ClientRegistration() {
           console.error("Error detecting location:", error);
           toast.error("Unable to detect your location.");
           setIsFetchingLocation(false);
-        }
+        },
       );
     } else {
       toast.error("Your browser does not support geolocation.");

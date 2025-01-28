@@ -35,7 +35,7 @@ export function ProfileStep({
 
   const handleImageUpload = (
     e: React.ChangeEvent<HTMLInputElement>,
-    onChange: (value: File) => void
+    onChange: (value: File) => void,
   ) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -43,22 +43,14 @@ export function ProfileStep({
     }
   };
 
-  // const handleMultipleImageUpload = (
-  //   e: React.ChangeEvent<HTMLInputElement>,
-  //   onChange: (value: File[]) => void
-  // ) => {
-  //   const files = Array.from(e.target.files || []);
-  //   if (files.length > 0) {
-  //     onChange(files);
-  //   }
-  // };
-
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold">Photo de Profile</h2>
-          <p className="text-sm text-gray-600">Photo de votre visage</p>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <div className="space-y-6">
+          <h2 className="text-2xl font-semibold">Profile Photo</h2>
+          <p className="text-sm text-gray-600">
+            Upload a clear photo of your face.
+          </p>
           <FormField
             control={form.control}
             name="profilePicture"
@@ -105,10 +97,10 @@ export function ProfileStep({
           />
         </div>
 
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold">Réalisations</h2>
+        <div className="space-y-6">
+          <h2 className="text-2xl font-semibold">Portfolio</h2>
           <p className="text-sm text-gray-600">
-            Montrer aux clients des photos de vos travaux
+            Showcase your work with up to 6 photos.
           </p>
           <FormField
             control={form.control}
@@ -170,13 +162,18 @@ export function ProfileStep({
           />
         </div>
 
-        <div className="flex justify-between">
-          <Button type="button" onClick={onBack} variant="outline">
+        <div className="flex justify-between gap-4">
+          <Button
+            type="button"
+            onClick={onBack}
+            variant="outline"
+            className="w-1/2"
+          >
             Back
           </Button>
           <Button
             type="submit"
-            className="bg-gradient-to-b from-[#5544B7] to-[#724FFF] text-white"
+            className="w-1/2 bg-gradient-to-b from-[#5544B7] to-[#724FFF] text-white"
           >
             Next
           </Button>
