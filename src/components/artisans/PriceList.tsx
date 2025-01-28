@@ -1,5 +1,5 @@
 interface PriceListProps {
-  prices: Price[];
+  prices: ArtisanPrice[];
 }
 
 export function PriceList({ prices }: PriceListProps) {
