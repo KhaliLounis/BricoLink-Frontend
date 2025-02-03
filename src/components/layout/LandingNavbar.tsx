@@ -35,7 +35,7 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
           <Link
-            href="/explore"
+            href="#"
             className="text-white leading-none font-poppins text-[14px] font-normal hover:text-primary"
           >
             Explore

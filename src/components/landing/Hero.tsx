@@ -11,7 +11,7 @@ interface TrendingServiceProps {
 
 const TrendingService: React.FC<TrendingServiceProps> = ({ title }) => (
   <Link
-    href={`/services/${title.toLowerCase()}`}
+    href={`#`}
     className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-[#5544B7] text-white hover:bg-white/20 transition-colors"
   >
     {title}
