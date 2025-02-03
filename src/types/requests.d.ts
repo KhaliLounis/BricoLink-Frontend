@@ -1,32 +1,43 @@
-interface RequestsOffer {
-  id: string;
-  artisan: {
-    id: string;
-    name: string;
-    avatar: string;
-    location: string;
-    rating?: {
-      score: number;
-      reviews: number;
-    };
-    available?: boolean;
-  };
-  status?: string;
-  createdAt: string;
-  distance: number;
+interface RequestsUser {
+  commune: string;
+  created_at: string;
+  description: string;
+  email: string;
+  family_name: string;
+  first_name: string;
+  hashed_password: string;
+  is_verified: boolean;
+  phone_number: string;
+  profile_picture: string;
+  role: string;
+  updated_at: string;
+  user_id: string;
 }
 
-interface RequestCardProps {
-  id: string;
-  title: string;
-  status: "open" | "closed";
-  createdAt: string;
-  location: string;
-  distance: number;
-  points: number;
-  offerCount: number;
-  clientName: string;
+interface RequestsOffer {
+  artisan_id: string;
+  content: string;
+  created_at: string;
+  offer_id: string;
+  offer_response_id: number;
+  request_id: string;
+  status: string;
+  updated_at: string;
+}
+
+interface RequestCard {
+  created_at: string;
   details: string;
-  phoneNumber: string;
+  is_finished: boolean;
   offers: RequestsOffer[];
+  request_id: string;
+  service_id: number;
+  title: string;
+  updated_at: string;
+  user: RequestsUser;
+}
+
+interface RequestsResponse {
+  data: RequestCard[];
+  status_code: number;
 }

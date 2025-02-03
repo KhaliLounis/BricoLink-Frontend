@@ -47,6 +47,7 @@ export const registerArtisan = async ({
   commune,
   profile_picture,
   realisations,
+  services,
 }: {
   first_name: string;
   family_name: string;
@@ -57,6 +58,7 @@ export const registerArtisan = async ({
   commune: string;
   profile_picture: File;
   realisations: File[];
+  services: string[];
 }) => {
   const formData = new FormData();
   formData.append("first_name", first_name);
@@ -70,6 +72,9 @@ export const registerArtisan = async ({
 
   realisations.forEach((file, index) => {
     formData.append("realisations", file);
+  });
+  services.forEach((service, index) => {
+    formData.append("services", service);
   });
 
   const response = await api.post("/auth/register/artisan", formData, {

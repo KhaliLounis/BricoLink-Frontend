@@ -7,7 +7,7 @@ import { ProfileHeader } from "@/components/profile/ProfileHeader";
 import { ProfileInfo } from "@/components/profile/ProfileInfo";
 import { ProfileOffers } from "@/components/profile/ProfileOffers";
 import { ProfilePrices } from "@/components/profile/ProfilePrices";
-import { ProfileRealizations } from "@/components/profile/ProfileRealizations";
+import { ProfileRealisations } from "@/components/profile/ProfileRealizations";
 import { motion } from "framer-motion";
 import { getArtisanProfile } from "@/services/profiles";
 import Loading from "@/components/ui/Loading";
@@ -52,7 +52,7 @@ export default function ProfilePage() {
             <div className="lg:col-span-2 space-y-8">
               <ProfileInfo profile={profile} />
               <ProfileOffers offers={profile?.offers} />
-              <ProfileRealizations realizations={profile?.realizations} />
+              <ProfileRealisations realisations={profile?.realisations} />
             </div>
             <div className="lg:col-span-1">
               <div className="sticky top-20">

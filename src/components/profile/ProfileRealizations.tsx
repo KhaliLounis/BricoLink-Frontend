@@ -5,49 +5,49 @@ import { Plus, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useCallback } from "react";
 
-interface ProfileRealizationsProps {
-  realizations: Realization[] | undefined;
+interface ProfileRealisationsProps {
+  realisations: Realisation[] | undefined;
 }
 
-export function ProfileRealizations({
-  realizations,
-}: ProfileRealizationsProps) {
-  const [selectedRealization, setSelectedRealization] = useState<
+export function ProfileRealisations({
+  realisations,
+}: ProfileRealisationsProps) {
+  const [selectedRealisation, setSelectedRealisation] = useState<
     string | null | undefined
   >(null);
 
   const closeModal = useCallback(() => {
-    setSelectedRealization(null);
+    setSelectedRealisation(null);
   }, []);
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Realizations</CardTitle>
+        <CardTitle>Realisations</CardTitle>
       </CardHeader>
       <CardContent>
-        {!realizations || realizations.length === 0 ? (
+        {!realisations || realisations.length === 0 ? (
           <div className="text-center py-8">
-            <p className="text-gray-500 mb-4">No realizations available</p>
+            <p className="text-gray-500 mb-4">No realisations available</p>
             <Button variant="outline" size="sm">
-              <Plus className="mr-2 h-4 w-4" /> Add Realization
+              <Plus className="mr-2 h-4 w-4" /> Add Realisation
             </Button>
           </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {realizations.map((realization) => (
+            {realisations.map((realisation) => (
               <motion.div
-                key={realization.realisation_id}
+                key={realisation.realisation_id}
                 className="relative aspect-square cursor-pointer overflow-hidden rounded-lg"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300, damping: 10 }}
                 onClick={() =>
-                  setSelectedRealization(realization.realisation_id)
+                  setSelectedRealisation(realisation.realisation_id)
                 }
               >
                 <Image
-                  src={realization.image_url || "/placeholder.svg"}
-                  alt="Realization"
+                  src={realisation.image_url || "/placeholder.svg"}
+                  alt="Realisation"
                   fill
                   className="object-cover"
                 />
@@ -70,7 +70,7 @@ export function ProfileRealizations({
         )}
       </CardContent>
       <AnimatePresence>
-        {selectedRealization && realizations && (
+        {selectedRealisation && realisations && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -95,11 +95,11 @@ export function ProfileRealizations({
               </Button>
               <Image
                 src={
-                  realizations.find(
-                    (r) => r.realisation_id === selectedRealization,
+                  realisations.find(
+                    (r) => r.realisation_id === selectedRealisation
                   )?.image_url || "/placeholder.svg"
                 }
-                alt="Full size realization"
+                alt="Full size realisation"
                 width={1200}
                 height={800}
                 className="rounded-lg shadow-lg"

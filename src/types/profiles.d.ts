@@ -19,7 +19,7 @@ interface Price {
   updated_at: string;
 }
 
-interface Realization {
+interface Realisation {
   realisation_id: string;
   artisan_id: string;
   created_at: string;
@@ -38,5 +38,5 @@ interface Profile {
   services: number[];
   offers?: Offer[];
   prices?: Price[];
-  realizations?: Realization[];
+  realisations?: Realisation[];
 }

@@ -49,7 +49,7 @@ export const artisanProfileSchema = z.object({
 });
 
 export const artisanServicesSchema = z.object({
-  services: z.array(z.string()).min(1, "At least one service must be selected"),
+  services: z.array(z.number()).min(1, "At least one service must be selected"),
   bio: z.string().min(10, "Bio must be at least 10 characters long"),
 });
 

@@ -20,9 +20,6 @@ export function ProfileOffers({ offers }: ProfileOffersProps) {
         {!offers || offers.length === 0 ? (
           <div className="text-center py-8">
             <p className="text-gray-500 mb-4">No offers available</p>
-            <Button variant="outline" size="sm">
-              <Plus className="mr-2 h-4 w-4" /> Add Offer
-            </Button>
           </div>
         ) : (
           <div className="space-y-4">
@@ -38,7 +35,7 @@ export function ProfileOffers({ offers }: ProfileOffersProps) {
                   className="flex justify-between items-center cursor-pointer"
                   onClick={() =>
                     setExpandedOffer(
-                      expandedOffer === offer.offer_id ? null : offer.offer_id,
+                      expandedOffer === offer.offer_id ? null : offer.offer_id
                     )
                   }
                 >

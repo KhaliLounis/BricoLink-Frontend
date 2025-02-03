@@ -6,7 +6,7 @@ import { MapPin, ChevronDown, ChevronUp, ImageIcon } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { OfferCard } from "./OfferCard";
+import { OfferCard } from "./TrackingOfferCard";
 import { cn } from "@/lib/utils";
 
 export function RequestCard({
@@ -33,7 +33,7 @@ export function RequestCard({
                 "rounded-full",
                 status === "completed"
                   ? "bg-green-100 text-green-700"
-                  : "bg-blue-100 text-blue-700",
+                  : "bg-blue-100 text-blue-700"
               )}
             >
               {status === "completed" ? "Completed" : "In Progress"}

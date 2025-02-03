@@ -3,7 +3,7 @@
 import { Suspense, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { RequestCard } from "@/components/tracking/RequestCard";
+import { RequestCard } from "@/components/tracking/TrackingRequestCard";
 import { AddRequestButton } from "@/components/tracking/AddRequestButton";
 import { AddRequestDialog } from "@/components/tracking/AddRequestDialog";
 import { trackingTabs } from "@/lib/constants";

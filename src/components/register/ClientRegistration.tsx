@@ -48,7 +48,7 @@ export default function ClientRegistration() {
     longitude: null,
   });
   const [isFetchingLocation, setIsFetchingLocation] = useState(false);
-  const { setUser } = useAuth(); // Loading state
+  const { setUser } = useAuth();
 
   const form = useForm<ClientRegistrationForm>({
     resolver: zodResolver(clientRegistrationSchema),

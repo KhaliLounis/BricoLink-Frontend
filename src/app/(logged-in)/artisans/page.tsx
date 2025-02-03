@@ -4,30 +4,7 @@ import { Suspense, useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArtisanCard } from "@/components/artisans/ArtisanCard";
 import { useRouter, useSearchParams } from "next/navigation";
-
-const tabs = [
-  {
-    value: "all",
-    label: "All",
-    icon: "🌟",
-  },
-  {
-    value: "new",
-    label: "New",
-    icon: "🆕",
-  },
-  {
-    value: "well-rated",
-    label: "Well Rated",
-    icon: "👍",
-  },
-  {
-    value: "poorly-rated",
-    label: "Poorly Rated",
-    icon: "👎",
-  },
-];
-
+import { artisansTabs } from "@/lib/constants";
 // Sample data - replace with actual data from your API
 const sampleArtisans: ArtisanCardProps[] = [
   {
@@ -102,7 +79,7 @@ const sampleArtisans: ArtisanCardProps[] = [
 function ArtisansContent() {
   const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState(
-    searchParams.get("filter") || "all",
+    searchParams.get("filter") || "all"
   );
   const router = useRouter();
 
@@ -140,7 +117,7 @@ function ArtisansContent() {
           className="w-full"
         >
           <TabsList className="grid w-full grid-cols-4 mb-6">
-            {tabs.map((tab) => (
+            {artisansTabs.map((tab) => (
               <TabsTrigger
                 key={tab.value}
                 value={tab.value}

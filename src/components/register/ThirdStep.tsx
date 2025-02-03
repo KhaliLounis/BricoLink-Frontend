@@ -71,21 +71,21 @@ export function ServicesStep({
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                           {category.items.map((service) => (
                             <div
-                              key={service.id}
+                              key={service.code}
                               className={cn(
                                 "relative cursor-pointer rounded-lg p-3 transition-all border-2",
-                                field.value.includes(service.id)
+                                field.value.includes(service.code)
                                   ? "border-primary bg-primary/10"
-                                  : "border-muted-foreground/30 bg-muted opacity-75 hover:opacity-100",
+                                  : "border-muted-foreground/30 bg-muted opacity-75 hover:opacity-100"
                               )}
                               onClick={() => {
                                 const newValue = field.value.includes(
-                                  service.id,
+                                  service.code
                                 )
                                   ? field.value.filter(
-                                      (id: string) => id !== service.id,
+                                      (code: number) => code !== service.code
                                     )
-                                  : [...field.value, service.id];
+                                  : [...field.value, service.code];
                                 field.onChange(newValue);
                               }}
                             >
@@ -101,7 +101,7 @@ export function ServicesStep({
                               <p className="mt-2 text-center text-xs font-medium">
                                 {service.name}
                               </p>
-                              {field.value.includes(service.id) && (
+                              {field.value.includes(service.code) && (
                                 <CheckCircle className="w-5 h-5 text-primary absolute top-1 right-1 bg-background rounded-full" />
                               )}
                             </div>

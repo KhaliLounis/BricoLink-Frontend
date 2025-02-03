@@ -4,112 +4,24 @@ import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RequestCard } from "@/components/requests/RequestCard";
-
-const tabs = [
-  {
-    value: "all",
-    label: "All",
-    icon: "🌟",
-  },
-  {
-    value: "reviews",
-    label: "Reviews",
-    icon: "⭐",
-  },
-  {
-    value: "no-offers",
-    label: "No offers",
-    icon: "📝",
-  },
-  {
-    value: "nearby",
-    label: "Nearby",
-    icon: "📍",
-  },
-];
-
-// Sample data - replace with actual data from your API
-const sampleRequests: RequestCardProps[] = [
-  {
-    id: "1",
-    title: "Looking for a plumber",
-    status: "open",
-    createdAt: "12 hours ago",
-    location: "Bouinan, Blida",
-    distance: 27,
-    points: 5,
-    offerCount: 2,
-    clientName: "Anonymous",
-    details:
-      "Need a plumber to fix a water pressure regulator that keeps restarting on its own",
-    phoneNumber: "+213 555 123 456",
-    offers: [
-      {
-        id: "1",
-        artisan: {
-          id: "1",
-          name: "Brahim Amrani",
-          avatar: "/placeholder.svg",
-          location: "Mohammadia, Alger",
-          rating: {
-            score: 3,
-            reviews: 1,
-          },
-          available: true,
-        },
-        status:
-          "تم الغاء المعاملة بعد المفاهمة. متفاهمين على 17h نورمالمون بالصح الكليون يستنى بلومبي اللي يعرفوا هوا يجيه.",
-        createdAt: "2 days ago",
-        distance: 2,
-      },
-      {
-        id: "2",
-        artisan: {
-          id: "2",
-          name: "Zerrouk Mohamed",
-          avatar: "/placeholder.svg",
-          location: "Kolea, Tipaza",
-          available: true,
-        },
-        status: "ما تفاهمناش، الزبون ما يردش",
-        createdAt: "1 day ago",
-        distance: 38,
-      },
-    ],
-  },
-  {
-    id: "2",
-    title: "Need a plumber. URGENT",
-    status: "open",
-    createdAt: "12 hours ago",
-    location: "Reghaia",
-    distance: 14,
-    points: 10,
-    offerCount: 1,
-    clientName: "Anonymous",
-    details: "Urgent plumbing issue needs immediate attention",
-    phoneNumber: "+213 555 789 012",
-    offers: [
-      {
-        id: "2",
-        artisan: {
-          id: "2",
-          name: "Ahmed K.",
-          avatar: "/placeholder.svg",
-          location: "Reghaia",
-        },
-        createdAt: "",
-        distance: 0,
-      },
-    ],
-  },
-];
+import { requestsTabs } from "@/lib/constants";
+import { useQuery } from "@tanstack/react-query";
+import { getAllRequests } from "@/services/requests";
 
 function RequestsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const filter = searchParams.get("filter");
   const [activeTab, setActiveTab] = useState(filter || "all");
+
+  const {
+    data: requests,
+    isLoading,
+    error,
+  } = useQuery<RequestCard[]>({
+    queryKey: ["requests"],
+    queryFn: getAllRequests,
+  });
 
   const handleTabChange = (value: string) => {
     setActiveTab(value);
@@ -121,17 +33,22 @@ function RequestsContent() {
   };
 
   const getFilteredRequests = () => {
+    if (!requests) return [];
     switch (activeTab) {
       case "reviews":
-        return sampleRequests.filter((r) => r.offerCount > 0);
+        return requests.filter((r) => r.offers.length > 0);
       case "no-offers":
-        return sampleRequests.filter((r) => r.offerCount === 0);
+        return requests.filter((r) => r.offers.length === 0);
       case "nearby":
-        return sampleRequests.filter((r) => r.distance <= 20);
+        // You might want to implement a distance calculation here
+        return requests;
       default:
-        return sampleRequests;
+        return requests;
     }
   };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>An error occurred: {error.message}</div>;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -145,7 +62,7 @@ function RequestsContent() {
           className="w-full"
         >
           <TabsList className="grid w-full grid-cols-4 mb-6">
-            {tabs.map((tab) => (
+            {requestsTabs.map((tab) => (
               <TabsTrigger
                 key={tab.value}
                 value={tab.value}
@@ -158,7 +75,7 @@ function RequestsContent() {
           </TabsList>
           <div className="space-y-4">
             {getFilteredRequests().map((request) => (
-              <RequestCard key={request.id} {...request} />
+              <RequestCard key={request.request_id} request={request} />
             ))}
           </div>
         </Tabs>

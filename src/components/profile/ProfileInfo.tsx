@@ -19,7 +19,7 @@ export function ProfileInfo({ profile }: ProfileInfoProps) {
       "Decoration",
       "Landscaping",
     ];
-    return services[id - 1] || `Service ${id}`;
+    return services[id - 100] || `Service ${id}`;
   };
 
   return (

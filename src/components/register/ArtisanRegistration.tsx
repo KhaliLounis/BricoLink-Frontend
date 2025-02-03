@@ -42,10 +42,10 @@ export default function ArtisanRegistration({
     phoneNumber: searchParams.get("phoneNumber") || "",
     password: searchParams.get("password") || "",
     location: searchParams.get("location") || "",
-    services: searchParams.get("services")?.split(",") || [],
-    bio: searchParams.get("bio") || "",
     profilePicture: null as File | null,
+    bio: searchParams.get("bio") || "",
     realizations: [] as File[],
+    services: [],
   });
 
   const basicInfoForm = useForm<ArtisanBasicInfoForm>({
@@ -108,10 +108,11 @@ export default function ArtisanRegistration({
   });
 
   const onSubmit = async (
-    data: ArtisanBasicInfoForm | ArtisanProfileForm | ArtisanServicesForm,
+    data: ArtisanBasicInfoForm | ArtisanProfileForm | ArtisanServicesForm
   ) => {
     // Update formData with the new data
-    setFormData((prev) => ({ ...prev, ...data }));
+    console.log(data);
+    setFormData((prev: any) => ({ ...prev, ...data }));
     updateURL(data);
 
     if (currentStep < 3) {
@@ -122,18 +123,22 @@ export default function ArtisanRegistration({
     } else {
       // Final submission
       try {
+        // Construct the payload directly from the data passed to onSubmit
         const payload = {
-          first_name: formData.fullName.split(" ")[0], // Assuming fullName contains first and last name
-          family_name: formData.fullName.split(" ")[1] || "", // Adjust based on your form structure
-          email: formData.email,
-          password: formData.password,
-          phone_number: formData.phoneNumber,
-          description: formData.bio,
-          commune: formData.location, // Assuming location maps to commune
-          profile_picture: formData.profilePicture as File, // Ensure this is a File object
+          first_name: formData.fullName?.split(" ")[0] || "", // Use optional chaining to avoid errors
+          family_name: formData.fullName?.split(" ")[1] || "",
+          email: formData.email || "",
+          password: formData.password || "",
+          phone_number: formData.phoneNumber || "",
+          description: (data as ArtisanServicesForm).bio || "", // Type assertion
+          commune: formData.location || "",
+          profile_picture: formData.profilePicture as File,
           realisations: formData.realizations as File[],
-          // Ensure these are File objects
+          services: (data as ArtisanServicesForm).services.map((service) =>
+            service.toString()
+          ), // Convert numbers to strings
         };
+
         console.log(payload);
         // Call the mutation
         registrationMutation.mutate(payload);
@@ -203,7 +208,7 @@ export default function ArtisanRegistration({
                   key={step}
                   className={cn(
                     "w-3 h-3 rounded-full",
-                    step === currentStep ? "bg-primary" : "bg-gray-300",
+                    step === currentStep ? "bg-primary" : "bg-gray-300"
                   )}
                 />
               ))}

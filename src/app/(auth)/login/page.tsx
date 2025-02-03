@@ -69,7 +69,7 @@ const Login = () => {
   };
 
   const handleGoogleLogin = () => {
-    router.push(`${process.env.NEXT_PUBLIC_API_URL}/v1/auth/google`);
+    router.push(`${process.env.NEXT_PUBLIC_API_URL}/auth/google`);
   };
 
   return (
@@ -129,7 +129,7 @@ const Login = () => {
                   </label>
                 </div>
                 <Link
-                  href="/forgot-password"
+                  href="/reset-password"
                   className="text-sm text-[#6C63FF] hover:underline"
                 >
                   Forgot password?

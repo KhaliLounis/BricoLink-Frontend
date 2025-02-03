@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Edit, LogOut } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
 import { logout } from "@/services/auth";
@@ -13,7 +13,6 @@ interface ProfileHeaderProps {
 }
 
 export function ProfileHeader({ profile }: ProfileHeaderProps) {
-  const [gradientAngle, setGradientAngle] = useState(0);
   const { setUser } = useAuth();
   const router = useRouter();
   const logoutMutation = useMutation({
@@ -37,28 +36,22 @@ export function ProfileHeader({ profile }: ProfileHeaderProps) {
       },
     });
   };
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setGradientAngle((prevAngle) => (prevAngle + 1) % 360);
-    }, 50);
-    return () => clearInterval(interval);
-  }, []);
 
   const keyframes = `
-  @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-`;
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  `;
 
   return (
     <>
       <style>{keyframes}</style>
       <div
-        className={`bg-gradient-to-r from-purple-600 to-indigo-600 text-white transition-all duration-500`}
+        className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white"
         style={{
-          backgroundImage: `linear-gradient(${gradientAngle}deg, #7c3aed, #4f46e5, #7c3aed)`,
+          backgroundImage: "linear-gradient(45deg, #7c3aed, #4f46e5, #7c3aed)",
           backgroundSize: "400% 400%",
           animation: "gradientShift 15s ease infinite",
         }}
