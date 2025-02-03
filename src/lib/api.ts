@@ -11,14 +11,18 @@ export const api = axios.create({
   },
 });
 
+type QueuePromise = {
+  resolve: (value?: any) => void;
+  reject: (reason?: any) => void;
+};
+
 let isRefreshing = false;
-let failedRequestsQueue: any = [];
+let failedRequestsQueue: QueuePromise[] = [];
 
 const processQueue = (error: Error | null) => {
-  failedRequestsQueue.forEach((prom: any) => {
-    prom.resolve();
+  failedRequestsQueue.forEach((prom: QueuePromise) => {
+    error ? prom.reject(error) : prom.resolve();
   });
-
   failedRequestsQueue = [];
 };
 
@@ -28,55 +32,37 @@ api.interceptors.response.use(
   async (error) => {
     const { response } = error;
     console.log(response);
-    // If the error is due to token expiration
+    const originalRequest = error.config;
+
     if (
-      response &&
-      (response.data.error === "No access token provided" ||
-        response.data.error === "Invalid or expired token")
+      (response?.data?.error === "No access token provided" ||
+        response.data.error === "Invalid or expired token") &&
+      !isRefreshing
     ) {
-      console.log(response);
-      const originalRequest = error.config;
+      isRefreshing = true;
 
-      console.log(originalRequest);
-      if (!isRefreshing) {
-        isRefreshing = true;
-
-        try {
-          // Call the refreshToken function to refresh the token
-          const newAccessToken = await refreshToken();
-          console.log(newAccessToken); // Assume this updates the cookie with the new token
-
-          // Process queued requests with the new token
-          processQueue(null);
-          console.log("working");
-          // Retry the original request with the new token (the token is updated in cookies automatically)
-          return api(originalRequest);
-        } catch (refreshError) {
-          // If refresh fails, reject the queue
-          processQueue(refreshError as Error);
-          window.location.href = "/login";
-          // Handle the refresh token failure (e.g., redirect to login page)
-          return Promise.reject(refreshError);
-        } finally {
-          isRefreshing = false;
-        }
-      } else {
-        // Queue the failed request until the refresh is done
-        return new Promise((resolve, reject) => {
-          failedRequestsQueue.push({
-            resolve: () => {
-              // Retry the original request after the token is refreshed
-              resolve(api(originalRequest));
-            },
-            reject,
-          });
-        });
+      try {
+        await refreshToken();
+        const originalResponse = await api(originalRequest); // Retry original first
+        processQueue(null); // Process queue AFTER original succeeds
+        return originalResponse;
+      } catch (refreshError) {
+        processQueue(refreshError as Error); // Reject queue on failure
+        window.location.href = "/login";
+        return Promise.reject(refreshError);
+      } finally {
+        isRefreshing = false;
       }
+    } else if (isRefreshing) {
+      return new Promise((resolve, reject) => {
+        failedRequestsQueue.push({
+          resolve: () => resolve(api(originalRequest)),
+          reject,
+        });
+      });
     }
 
-    // If the error is not related to token expiration, reject it
     return Promise.reject(error);
-  },
+  }
 );
-
 export default api;

@@ -47,7 +47,7 @@ jobs:
             npm run build && \
 
             # Use PM2 to manage the app and ensure it starts on reboot
-            pm2 delete $(pm2 list | grep bricolink-frontend | awk '{print $2}') || true && \
+            pm2 delete bricolink-frontend || true && \
             pm2 start npm --name 'bricolink-frontend' -- start && \
             pm2 save \
           "

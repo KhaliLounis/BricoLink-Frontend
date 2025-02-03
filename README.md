@@ -4,13 +4,6 @@
 
 ---
 
-## 🌐 Live Preview
-
-You can view the deployed application here:  
-**[bricolink.starkk.tech](https://bricolink.starkk.tech)**
-
----
-
 ## 🌟 Features
 
 ### 1️⃣ **Authentication**
@@ -158,4 +151,4 @@ Feel free to fork, modify, and use it for your own purposes.
 For any questions, suggestions, or support, feel free to reach out:
 
 **Email**: k_lounis@estin.dz  
-**GitHub**: [Your GitHub Profile](https://github.com/KhaliLounis)
+**GitHub**: [KhaliLounis](https://github.com/KhaliLounis)
