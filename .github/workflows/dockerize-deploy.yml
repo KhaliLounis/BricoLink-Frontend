@@ -26,11 +26,12 @@ jobs:
       - name: Deploy and restart frontend with PM2
         run: |
           # Copy the source code to the VPS
-          rsync -avz --delete \
+          rsync -avz -v --delete \
             -e "ssh -i ~/.ssh/id_rsa" \
             --exclude='node_modules' \
             --exclude='.next' \
             --exclude='out' \
+            --exclude='.env' \  
             ./ \
             ${{ secrets.SSH_USER }}@${{ secrets.VPS_HOST }}:${{ secrets.DEPLOY_PATH }}/
 
