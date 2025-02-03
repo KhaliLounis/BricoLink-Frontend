@@ -100,7 +100,7 @@ const HeroSection: React.FC = () => {
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold">TRENDING SERVICES</h3>
                 <div className="flex flex-wrap gap-4">
-                  <TrendingService title="Decoration" />
+                  <TrendingService title="Dcoration" />
                   <TrendingService title="Plomberie" />
                   <TrendingService title="Électricité" />
                 </div>

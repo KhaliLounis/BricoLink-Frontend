@@ -31,7 +31,6 @@ jobs:
             --exclude='node_modules' \
             --exclude='.next' \
             --exclude='out' \
-            --exclude='.env' \  
             ./ \
             ${{ secrets.SSH_USER }}@${{ secrets.VPS_HOST }}:${{ secrets.DEPLOY_PATH }}/
 
