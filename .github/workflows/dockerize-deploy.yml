@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the code from the repository
+      # Step 1: Checkout the code from the repository (for CI/CD environment)
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -22,31 +22,15 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
 
-      # Step 3: Deploy and restart frontend using PM2 on the VPS
-      - name: Deploy and restart frontend with PM2
+      # Step 3: SSH into VPS and pull the latest changes from the Git repository
+      - name: Pull latest changes on VPS
         run: |
-          # Copy the source code to the VPS
-          rsync -avz --delete \
-            -e "ssh -i ~/.ssh/id_rsa" \
-            --exclude='node_modules' \
-            --exclude='.next' \
-            --exclude='out' \
-            --exclude='.env' \  
-            ./ \
-            ${{ secrets.SSH_USER }}@${{ secrets.VPS_HOST }}:${{ secrets.DEPLOY_PATH }}/
-
-          # Install dependencies, build, and start the Next.js app using PM2
           ssh -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.VPS_HOST }} "\
-            # Load nvm and set up the environment properly
-            export NVM_DIR=\$HOME/.nvm && \
-            source \$NVM_DIR/nvm.sh && \
-            nvm use default && \
-
-            # Install dependencies, build, and start the Next.js app
             cd ${{ secrets.DEPLOY_PATH }} && \
+            git pull origin main && \
+            # Install dependencies, build, and start the Next.js app
             npm install && \
             npm run build && \
-
             # Use PM2 to manage the app and ensure it starts on reboot
             pm2 delete bricolink-frontend || true && \
             pm2 start npm --name 'bricolink-frontend' -- start && \
