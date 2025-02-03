@@ -31,7 +31,6 @@ jobs:
             --exclude='node_modules' \
             --exclude='.next' \
             --exclude='out' \
-            --exclude='.env' \  
             ./ \
             ${{ secrets.SSH_USER }}@${{ secrets.VPS_HOST }}:${{ secrets.DEPLOY_PATH }}/
 
@@ -45,6 +44,7 @@ jobs:
             # Install dependencies, build, and start the Next.js app
             cd ${{ secrets.DEPLOY_PATH }} && \
             npm install && \
+            echo '${{ secrets.PRODUCTION_ENV }}' > .env && \
             npm run build && \
 
             # Use PM2 to manage the app and ensure it starts on reboot
