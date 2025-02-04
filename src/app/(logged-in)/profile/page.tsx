@@ -9,7 +9,7 @@ import { ProfileOffers } from "@/components/profile/ProfileOffers";
 import { ProfilePrices } from "@/components/profile/ProfilePrices";
 import { ProfileRealisations } from "@/components/profile/ProfileRealizations";
 import { motion } from "framer-motion";
-import { getArtisanProfile } from "@/services/profiles";
+import { getProfileAsArtisan } from "@/services/profiles";
 import Loading from "@/components/ui/Loading";
 
 export default function ProfilePage() {
@@ -22,7 +22,7 @@ export default function ProfilePage() {
     status_code: number;
   }>({
     queryKey: ["profile"],
-    queryFn: () => getArtisanProfile(),
+    queryFn: () => getProfileAsArtisan(),
     select: (response) => response, // Return the full response object
   });
 

@@ -101,6 +101,16 @@ export const logout = async () => {
   return response.data;
 };
 
+export const sendOtpToVerifyEmail = async (email: string) => {
+  const response = await api.post("/auth/verify/otp", { email });
+  return response.data;
+};
+
+export const verifyUserAccount = async (user_id: string, otp: string) => {
+  const response = await api.post(`/auth/verify/${user_id}`, { otp });
+  return response.data;
+};
+
 export const requestPasswordReset = async (email: string) => {
   const response = await api.post("/auth/reset-password", { email });
   return response.data;

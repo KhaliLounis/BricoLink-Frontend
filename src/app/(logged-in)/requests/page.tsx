@@ -1,30 +1,44 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RequestCard } from "@/components/requests/RequestCard";
 import { requestsTabs } from "@/lib/constants";
-import { useQuery } from "@tanstack/react-query";
-import { getAllRequests } from "@/services/requests";
+import {
+  getAllRequests,
+  getRequestsWithReviews,
+  getNearbyRequests,
+  getRequestsWithoutOffers,
+} from "@/services/requests";
 
-function RequestsContent() {
+function RequestsPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const filter = searchParams.get("filter");
-  const [activeTab, setActiveTab] = useState(filter || "all");
+  const filter = searchParams.get("filter") || "all";
 
-  const {
-    data: requests,
-    isLoading,
-    error,
-  } = useQuery<RequestCard[]>({
-    queryKey: ["requests"],
-    queryFn: getAllRequests,
+  const { data, isLoading, error, isError } = useQuery({
+    queryKey: ["requests", filter],
+    queryFn: () => {
+      switch (filter) {
+        case "reviews":
+          return getRequestsWithReviews();
+        case "nearby":
+          return getNearbyRequests();
+        case "no-offers":
+          return getRequestsWithoutOffers();
+        default:
+          return getAllRequests();
+      }
+    },
+    // Prevent automatic retry on failure
+    retry: false,
+    // Ensure the query runs even if the endpoint might not exist
+    enabled: true,
   });
 
   const handleTabChange = (value: string) => {
-    setActiveTab(value);
     if (value === "all") {
       router.push("/requests");
     } else {
@@ -32,35 +46,13 @@ function RequestsContent() {
     }
   };
 
-  const getFilteredRequests = () => {
-    if (!requests) return [];
-    switch (activeTab) {
-      case "reviews":
-        return requests.filter((r) => r.offers.length > 0);
-      case "no-offers":
-        return requests.filter((r) => r.offers.length === 0);
-      case "nearby":
-        // You might want to implement a distance calculation here
-        return requests;
-      default:
-        return requests;
-    }
-  };
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>An error occurred: {error.message}</div>;
-
   return (
     <div className="min-h-screen bg-gray-50">
       <main className="container mx-auto pt-20 px-4 pb-24">
         <h1 className="text-2xl font-bold text-center mb-2">
           Service Requests
         </h1>
-        <Tabs
-          value={activeTab}
-          onValueChange={handleTabChange}
-          className="w-full"
-        >
+        <Tabs value={filter} onValueChange={handleTabChange} className="w-full">
           <TabsList className="grid w-full grid-cols-4 mb-6">
             {requestsTabs.map((tab) => (
               <TabsTrigger
@@ -74,9 +66,19 @@ function RequestsContent() {
             ))}
           </TabsList>
           <div className="space-y-4">
-            {getFilteredRequests().map((request) => (
-              <RequestCard key={request.request_id} request={request} />
-            ))}
+            {isLoading ? (
+              <div className="text-center">Loading...</div>
+            ) : isError ? (
+              <div className="text-center text-red-500">
+                Error loading requests.
+              </div>
+            ) : data && data.length > 0 ? (
+              data.map((request: RequestCard) => (
+                <RequestCard key={request.request_id} request={request} />
+              ))
+            ) : (
+              <div className="text-center text-gray-500">No requests found</div>
+            )}
           </div>
         </Tabs>
       </main>
@@ -84,10 +86,4 @@ function RequestsContent() {
   );
 }
 
-export default function RequestsPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <RequestsContent />
-    </Suspense>
-  );
-}
+export default RequestsPage;
