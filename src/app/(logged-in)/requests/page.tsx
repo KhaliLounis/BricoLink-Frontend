@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -13,7 +13,7 @@ import {
   getRequestsWithoutOffers,
 } from "@/services/requests";
 
-function RequestsPage() {
+function RequestsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const filter = searchParams.get("filter") || "all";
@@ -86,4 +86,10 @@ function RequestsPage() {
   );
 }
 
-export default RequestsPage;
+export default function RequestsPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <RequestsContent />
+    </Suspense>
+  );
+}

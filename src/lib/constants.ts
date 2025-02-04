@@ -832,6 +832,89 @@ export const services = [
   },
 ];
 
+export const offerResponses = [
+  {
+    code: 101,
+    message: "I accept the offer and will proceed with the work.",
+  },
+  {
+    code: 102,
+    message: "I accept the offer and will contact you shortly.",
+  },
+  {
+    code: 103,
+    message: "I accept the offer and will start immediately.",
+  },
+  {
+    code: 104,
+    message: "I accept the offer and will provide updates regularly.",
+  },
+  {
+    code: 105,
+    message: "I accept the offer and will ensure high-quality work.",
+  },
+  {
+    code: 106,
+    message: "I accept the offer and will complete it on time.",
+  },
+  {
+    code: 107,
+    message: "I accept the offer and will follow your instructions carefully.",
+  },
+  {
+    code: 108,
+    message: "I accept the offer and will use the best materials.",
+  },
+  {
+    code: 109,
+    message: "I accept the offer and will provide a detailed plan.",
+  },
+  {
+    code: 110,
+    message: "I accept the offer and will ensure your satisfaction.",
+  },
+  {
+    code: 201,
+    message: "I cannot accept the offer due to scheduling conflicts.",
+  },
+  {
+    code: 202,
+    message: "I cannot accept the offer as it is outside my service area.",
+  },
+  {
+    code: 203,
+    message: "I cannot accept the offer due to budget constraints.",
+  },
+  {
+    code: 204,
+    message: "I cannot accept the offer as I am fully booked.",
+  },
+  {
+    code: 205,
+    message: "I cannot accept the offer due to lack of required materials.",
+  },
+  {
+    code: 206,
+    message: "I cannot accept the offer as it does not match my expertise.",
+  },
+  {
+    code: 207,
+    message: "I cannot accept the offer due to personal reasons.",
+  },
+  {
+    code: 208,
+    message: "I cannot accept the offer as the timeline is too tight.",
+  },
+  {
+    code: 209,
+    message: "I cannot accept the offer due to unforeseen circumstances.",
+  },
+  {
+    code: 210,
+    message: "I cannot accept the offer as it exceeds my capacity.",
+  },
+];
+
 export const navItems = [
   {
     title: "Tracking",
