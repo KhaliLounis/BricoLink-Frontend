@@ -17,7 +17,7 @@ export const getProfileAsClient = async () => {
 
 export const updateUserProfile = async (
   formData: FormData,
-  user_id: string
+  user_id: string,
 ) => {
   const response = await api.put(`/auth/profile/${user_id}`, formData, {
     headers: {

@@ -9,7 +9,7 @@ import VerificationForm from "@/components/register/VerificationForm";
 
 export default function RegisterPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div> </div>}>
       <RegisterPageContent />
     </Suspense>
   );

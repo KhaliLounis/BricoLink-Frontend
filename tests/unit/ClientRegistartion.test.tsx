@@ -68,16 +68,16 @@ describe("ClientRegistration Component", () => {
     render(<ClientRegistration />);
 
     expect(
-      screen.getByPlaceholderText(/Enter your first name/i)
+      screen.getByPlaceholderText(/Enter your first name/i),
     ).toBeInTheDocument();
     expect(
-      screen.getByPlaceholderText(/Enter your family name/i)
+      screen.getByPlaceholderText(/Enter your family name/i),
     ).toBeInTheDocument();
     expect(
-      screen.getByPlaceholderText(/Enter your email/i)
+      screen.getByPlaceholderText(/Enter your email/i),
     ).toBeInTheDocument();
     expect(
-      screen.getByPlaceholderText(/Enter your password/i)
+      screen.getByPlaceholderText(/Enter your password/i),
     ).toBeInTheDocument();
   });
 
@@ -136,7 +136,7 @@ describe("ClientRegistration Component", () => {
     // Mock geolocation
     const mockGeolocation = {
       getCurrentPosition: jest.fn((success: PositionCallback) =>
-        success(mockPosition)
+        success(mockPosition),
       ),
     };
 

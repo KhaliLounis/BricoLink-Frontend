@@ -26,6 +26,7 @@ interface RequestsOffer {
 }
 
 interface RequestCard {
+  request_id: string;
   created_at: string;
   details: string;
   is_finished: boolean;

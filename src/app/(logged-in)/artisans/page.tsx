@@ -79,7 +79,7 @@ const sampleArtisans: ArtisanCardProps[] = [
 function ArtisansContent() {
   const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState(
-    searchParams.get("filter") || "all"
+    searchParams.get("filter") || "all",
   );
   const router = useRouter();
 
@@ -141,7 +141,7 @@ function ArtisansContent() {
 
 export default function ArtisansPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div> </div>}>
       <ArtisansContent />
     </Suspense>
   );

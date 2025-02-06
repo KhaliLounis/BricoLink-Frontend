@@ -108,7 +108,7 @@ export default function ArtisanRegistration({
   });
 
   const onSubmit = async (
-    data: ArtisanBasicInfoForm | ArtisanProfileForm | ArtisanServicesForm
+    data: ArtisanBasicInfoForm | ArtisanProfileForm | ArtisanServicesForm,
   ) => {
     // Update formData with the new data
     console.log(data);
@@ -135,7 +135,7 @@ export default function ArtisanRegistration({
           profile_picture: formData.profilePicture as File,
           realisations: formData.realizations as File[],
           services: (data as ArtisanServicesForm).services.map((service) =>
-            service.toString()
+            service.toString(),
           ), // Convert numbers to strings
         };
 
@@ -208,7 +208,7 @@ export default function ArtisanRegistration({
                   key={step}
                   className={cn(
                     "w-3 h-3 rounded-full",
-                    step === currentStep ? "bg-primary" : "bg-gray-300"
+                    step === currentStep ? "bg-primary" : "bg-gray-300",
                   )}
                 />
               ))}

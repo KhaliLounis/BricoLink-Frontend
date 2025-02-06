@@ -20,12 +20,24 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Camera } from "lucide-react";
 import Image from "next/image";
+import { addRequest } from "@/services/requests";
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { services } from "@/lib/constants";
 
 const requestSchema = z.object({
+  service_id: z.number().min(1, "Service is required"),
   title: z.string().min(1, "Title is required"),
   details: z.string().min(10, "Details must be at least 10 characters long"),
   images: z.array(z.instanceof(File)).max(3, "Maximum 3 images allowed"),
@@ -40,7 +52,19 @@ interface AddRequestDialogProps {
 
 export function AddRequestDialog({ isOpen, onClose }: AddRequestDialogProps) {
   const [images, setImages] = useState<File[]>([]);
-
+  const addRequestMutation = useMutation({
+    mutationFn: addRequest,
+    onSuccess: () => {
+      toast.success("Request added successfully");
+      onClose();
+      form.reset();
+      setImages([]);
+    },
+    onError: (error) => {
+      toast.error("An error occurred. Please try again.");
+      console.error("Error adding request:", error);
+    },
+  });
   const form = useForm<RequestForm>({
     resolver: zodResolver(requestSchema),
     defaultValues: {
@@ -52,10 +76,14 @@ export function AddRequestDialog({ isOpen, onClose }: AddRequestDialogProps) {
 
   const onSubmit = (data: RequestForm) => {
     console.log(data);
-    // Here you would typically send the data to your backend
-    onClose();
-    form.reset();
-    setImages([]);
+    const formData = new FormData();
+    formData.append("service_id", data.service_id.toString());
+    formData.append("title", data.title);
+    formData.append("description", data.details);
+    data.images.forEach((image, index) => {
+      formData.append("images", image);
+    });
+    addRequestMutation.mutate(formData);
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,6 +108,51 @@ export function AddRequestDialog({ isOpen, onClose }: AddRequestDialogProps) {
                   <FormLabel>Title</FormLabel>
                   <FormControl>
                     <Input placeholder="Enter request title" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="service_id"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Service</FormLabel>
+                  <FormControl>
+                    <Select
+                      onValueChange={(value) => field.onChange(Number(value))}
+                      value={field.value?.toString()}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a service" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {services.map((category) => (
+                          <>
+                            {/* Add a disabled SelectItem as a category label */}
+                            <SelectItem
+                              key={category.category}
+                              value={category.category}
+                              disabled
+                              className="font-bold text-gray-500 bg-white hover:bg-[#c2c3c465]"
+                            >
+                              {category.category}
+                            </SelectItem>
+                            {/* Render the services under this category */}
+                            {category.items.map((service) => (
+                              <SelectItem
+                                key={service.code}
+                                value={service.code.toString()}
+                                className="bg-white hover:bg-[#c2c3c465]"
+                              >
+                                {service.name}
+                              </SelectItem>
+                            ))}
+                          </>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -144,7 +217,11 @@ export function AddRequestDialog({ isOpen, onClose }: AddRequestDialogProps) {
               )}
             />
             <DialogFooter>
-              <Button type="submit">Submit Request</Button>
+              <Button type="submit" disabled={addRequestMutation.isPending}>
+                {addRequestMutation.isPending
+                  ? "Submitting..."
+                  : "Submit Request"}
+              </Button>{" "}
             </DialogFooter>
           </form>
         </Form>

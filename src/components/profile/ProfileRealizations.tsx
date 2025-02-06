@@ -96,7 +96,7 @@ export function ProfileRealisations({
               <Image
                 src={
                   realisations.find(
-                    (r) => r.realisation_id === selectedRealisation
+                    (r) => r.realisation_id === selectedRealisation,
                   )?.image_url || "/placeholder.svg"
                 }
                 alt="Full size realisation"

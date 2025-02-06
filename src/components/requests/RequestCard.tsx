@@ -9,9 +9,38 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { OffersList } from "./OffersList";
 import { cn, getTimeAgo } from "@/lib/utils";
 import toast from "react-hot-toast";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { addOffer } from "@/services/offers";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 
 export function RequestCard({ request }: { request: RequestCard }) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [offerDialogOpen, setOfferDialogOpen] = useState(false);
+  const [offerMessage, setOfferMessage] = useState(
+    "I am interested in your request. Please contact me for further details."
+  );
+  const queryClient = useQueryClient();
+  const addOfferMutation = useMutation({
+    mutationFn: addOffer,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["requests"] });
+      toast.success("Offer added successfully.");
+      setOfferDialogOpen(false);
+      // Optionally, refresh the offers list here.
+    },
+    onError: (error) => {
+      toast.error("Failed to add offer. Please try again.");
+      console.error(error);
+    },
+  });
 
   const handleShowPhone = () => {
     toast.error("You need to make an offer first to see the phone number", {
@@ -21,6 +50,15 @@ export function RequestCard({ request }: { request: RequestCard }) {
         background: "#F43F5E",
         color: "white",
       },
+    });
+  };
+
+  const handleAddOfferSubmit = () => {
+    console.log(offerMessage, request.request_id);
+    // Call the mutation with the offer message and request ID
+    addOfferMutation.mutate({
+      content: offerMessage,
+      request_id: request.request_id,
     });
   };
 
@@ -96,9 +134,12 @@ export function RequestCard({ request }: { request: RequestCard }) {
                   <MapPin className="h-4 w-4" />
                   <span>{request.user.commune}</span>
                 </div>
-                <Button variant="secondary" onClick={handleShowPhone}>
+                <Button
+                  variant="secondary"
+                  // onClick={handleShowPhone}
+                >
                   <Phone className="h-4 w-4 mr-2" />
-                  Show number
+                  {request.user.phone_number || "Show phone number"}
                 </Button>
               </div>
 
@@ -109,9 +150,28 @@ export function RequestCard({ request }: { request: RequestCard }) {
             </div>
 
             <div className="flex items-center gap-2">
-              <Button className="flex-1 bg-gradient-to-r from-[#5544B7] to-[#724FFF] text-white">
-                Make an offer
-              </Button>
+              {/* Dialog for making an offer */}
+              <Dialog open={offerDialogOpen} onOpenChange={setOfferDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button className="flex-1 bg-gradient-to-r from-[#5544B7] to-[#724FFF] text-white">
+                    Make an offer
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogTitle>Make an Offer</DialogTitle>
+                  <DialogDescription>
+                    Edit your offer message below:
+                  </DialogDescription>
+                  <Input
+                    value={offerMessage}
+                    onChange={(e) => setOfferMessage(e.target.value)}
+                    className="mt-4"
+                  />
+                  <DialogFooter>
+                    <Button onClick={handleAddOfferSubmit}>Submit Offer</Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
               <Button variant="outline" size="icon">
                 <Share2 className="h-4 w-4" />
               </Button>

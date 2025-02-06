@@ -7,7 +7,7 @@ export const addOffer = async ({
   content: string;
   request_id: string;
 }) => {
-  const response = await api.post("/offer", { content, request_id });
+  const response = await api.post(`/offer/request/${request_id}`, { content });
   return response.data;
 };
 

@@ -35,7 +35,7 @@ export function ProfileStep({
 
   const handleImageUpload = (
     e: React.ChangeEvent<HTMLInputElement>,
-    onChange: (value: File) => void
+    onChange: (value: File) => void,
   ) => {
     const file = e.target.files?.[0];
     if (file) {

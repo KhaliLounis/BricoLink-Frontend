@@ -7,6 +7,7 @@ import { RequestCard } from "@/components/tracking/TrackingRequestCard";
 import { AddRequestButton } from "@/components/tracking/AddRequestButton";
 import { AddRequestDialog } from "@/components/tracking/AddRequestDialog";
 import { trackingTabs } from "@/lib/constants";
+import { useAuth } from "@/context/AuthContext";
 // Sample data - replace with actual data from your API
 const sampleRequests: TrackingRequestCardProps[] = [
   {
@@ -123,6 +124,7 @@ const sampleRequests: TrackingRequestCardProps[] = [
 
 function TrackingContent() {
   const router = useRouter();
+  const { user } = useAuth();
   const searchParams = useSearchParams();
   const filter = searchParams.get("filter");
   const [isAddRequestOpen, setIsAddRequestOpen] = useState(false);
@@ -166,17 +168,19 @@ function TrackingContent() {
         onValueChange={handleTabChange}
         className="w-full"
       >
-        <TabsList className="grid w-full grid-cols-3 mb-6">
-          {trackingTabs.map((tab) => (
-            <TabsTrigger
-              key={tab.value}
-              value={tab.value}
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#5544B7] data-[state=active]:to-[#724FFF] data-[state=active]:text-white"
-            >
-              {tab.label}
-            </TabsTrigger>
-          ))}
-        </TabsList>
+        {user?.role === "Artisan" && (
+          <TabsList className="grid w-full grid-cols-3 mb-6">
+            {trackingTabs.map((tab) => (
+              <TabsTrigger
+                key={tab.value}
+                value={tab.value}
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#5544B7] data-[state=active]:to-[#724FFF] data-[state=active]:text-white"
+              >
+                {tab.label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        )}
         <div className="space-y-4">
           {filteredRequests.map((request) => (
             <RequestCard key={request.id} {...request} />
@@ -193,7 +197,7 @@ function TrackingContent() {
 }
 export default function TrackingPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div> </div>}>
       <TrackingContent />
     </Suspense>
   );

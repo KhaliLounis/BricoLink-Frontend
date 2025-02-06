@@ -1,6 +1,6 @@
 enum Role {
-  ARTISAN = "ARTISAN",
-  CLIENT = "CLIENT",
+  ARTISAN = "Artisan",
+  CLIENT = "Client",
 }
 
 interface User {

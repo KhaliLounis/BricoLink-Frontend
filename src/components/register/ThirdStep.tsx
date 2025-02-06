@@ -76,14 +76,14 @@ export function ServicesStep({
                                 "relative cursor-pointer rounded-lg p-3 transition-all border-2",
                                 field.value.includes(service.code)
                                   ? "border-primary bg-primary/10"
-                                  : "border-muted-foreground/30 bg-muted opacity-75 hover:opacity-100"
+                                  : "border-muted-foreground/30 bg-muted opacity-75 hover:opacity-100",
                               )}
                               onClick={() => {
                                 const newValue = field.value.includes(
-                                  service.code
+                                  service.code,
                                 )
                                   ? field.value.filter(
-                                      (code: number) => code !== service.code
+                                      (code: number) => code !== service.code,
                                     )
                                   : [...field.value, service.code];
                                 field.onChange(newValue);

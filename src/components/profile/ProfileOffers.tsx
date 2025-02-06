@@ -35,7 +35,7 @@ export function ProfileOffers({ offers }: ProfileOffersProps) {
                   className="flex justify-between items-center cursor-pointer"
                   onClick={() =>
                     setExpandedOffer(
-                      expandedOffer === offer.offer_id ? null : offer.offer_id
+                      expandedOffer === offer.offer_id ? null : offer.offer_id,
                     )
                   }
                 >

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Edit, LogOut } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { logout } from "@/services/auth";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
@@ -15,10 +15,12 @@ interface ProfileHeaderProps {
 export function ProfileHeader({ profile }: ProfileHeaderProps) {
   const { setUser } = useAuth();
   const router = useRouter();
+  const queryClient = useQueryClient();
   const logoutMutation = useMutation({
     mutationFn: logout,
     onSuccess: () => {
       toast.success("Logout successful!");
+      queryClient.clear();
       router.push("/login");
       setUser(null); // Clear the user from context
     },

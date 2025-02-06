@@ -31,7 +31,7 @@ api.interceptors.response.use(
   (response) => response, // No need to handle successful responses
   async (error) => {
     const { response } = error;
-    console.log(response);
+    console.log(error, response);
     const originalRequest = error.config;
 
     if (
@@ -63,6 +63,6 @@ api.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 export default api;

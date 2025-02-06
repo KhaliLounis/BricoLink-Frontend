@@ -49,7 +49,7 @@ export async function middleware(request: NextRequest) {
       ];
 
       const isAllowed = allowedRoutes.some((route) =>
-        pathname.startsWith(route)
+        pathname.startsWith(route),
       );
 
       // If the user is not allowed to access the route, redirect them to /tracking

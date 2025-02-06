@@ -54,7 +54,7 @@ export function OffersList({ offers, expanded = false }: OffersListProps) {
                     "mt-2 p-2 rounded-md text-sm",
                     offer.status.includes("success")
                       ? "bg-green-50 text-green-700"
-                      : "bg-red-50 text-red-700"
+                      : "bg-red-50 text-red-700",
                   )}
                 >
                   {offer.status}
